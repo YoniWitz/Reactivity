@@ -1204,11 +1204,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj",
+      "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj",
+      "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\obj\\",
+      "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1227,8 +1227,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj"
+            "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj": {
+              "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj"
             }
           }
         }

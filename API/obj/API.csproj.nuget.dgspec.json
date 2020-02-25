@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj": {}
+    "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj": {
+    "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj",
+        "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\API.csproj",
+        "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\API\\obj\\",
+        "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj"
+              "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj": {
+                "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj"
               }
             }
           }
@@ -72,14 +72,14 @@
         }
       }
     },
-    "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj": {
+    "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj",
+        "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj",
+        "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\obj\\",
+        "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -98,11 +98,11 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj"
+              "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
+                "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
-                "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj"
+              "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
+                "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj"
               }
             }
           }
@@ -137,14 +137,14 @@
         }
       }
     },
-    "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
+    "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj",
+        "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj",
+        "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\obj\\",
+        "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -195,14 +195,14 @@
         }
       }
     },
-    "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
+    "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj",
+        "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj",
         "projectName": "Persistence",
-        "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj",
+        "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj",
         "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\obj\\",
+        "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -221,8 +221,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj"
+              "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
+                "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj"
               }
             }
           }
