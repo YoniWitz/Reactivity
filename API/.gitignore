@@ -25,6 +25,7 @@ obj/
 Obj/
 
 # Visual Studio 2015 cache/options directory
+.vscode
 .vs/
 /wwwroot/dist/
 
@@ -182,6 +183,9 @@ orleans.codegen.cs
 
 /node_modules
 
+.DS_Store
+appsettings.json
+*.db
 # RIA/Silverlight projects
 Generated_Code/
 
