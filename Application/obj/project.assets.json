@@ -1479,11 +1479,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj",
+      "projectUniqueName": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\Application.csproj",
+      "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\Application.csproj",
       "packagesPath": "C:\\Users\\Yoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Application\\obj\\",
+      "outputPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1502,11 +1502,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Domain\\Domain.csproj"
+            "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj": {
+              "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
-              "projectPath": "C:\\Users\\Yoni\\workspace\\FullStack\\DonNetCoreReact\\reactivity\\Persistence\\Persistence.csproj"
+            "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj": {
+              "projectPath": "c:\\Users\\Yoni\\workspace\\FullStack\\DotNetCoreReact\\reactivity\\Persistence\\Persistence.csproj"
             }
           }
         }

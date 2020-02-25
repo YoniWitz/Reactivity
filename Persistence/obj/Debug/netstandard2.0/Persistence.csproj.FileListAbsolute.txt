@@ -9,3 +9,14 @@ C:\Users\Yoni\workspace\FullStack\DonNetCoreReact\reactivity\Persistence\obj\Deb
 C:\Users\Yoni\workspace\FullStack\DonNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.csproj.CopyComplete
 C:\Users\Yoni\workspace\FullStack\DonNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.dll
 C:\Users\Yoni\workspace\FullStack\DonNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.pdb
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\bin\Debug\netstandard2.0\Persistence.deps.json
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\bin\Debug\netstandard2.0\Persistence.dll
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\bin\Debug\netstandard2.0\Persistence.pdb
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\bin\Debug\netstandard2.0\Domain.dll
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\bin\Debug\netstandard2.0\Domain.pdb
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.csprojAssemblyReference.cache
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.AssemblyInfoInputs.cache
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.AssemblyInfo.cs
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.csproj.CopyComplete
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.dll
+C:\Users\Yoni\workspace\FullStack\DotNetCoreReact\reactivity\Persistence\obj\Debug\netstandard2.0\Persistence.pdb
