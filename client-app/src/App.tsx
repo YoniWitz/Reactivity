@@ -26,15 +26,13 @@ class App extends Component {
         <Header as='h2'>
           <Icon name='users' />
           <Header.Content>Reacitivity</Header.Content>
-          <List>
-          {this.state.values.map((value: any) => (
-              <List.Item key={value.id}>{value.name}</List.Item>
-            ))
-            }
-        
-          </List>
         </Header>
-
+        <List>
+          {this.state.values.map((value: any) => (
+            <List.Item key={value.id}>{value.name}</List.Item>
+          ))
+          }
+        </List>
       </div>)
   }
 }
