@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    values: []
+  }
+
+  //called immediately after the component is mounted
+  componentDidMount() {
+    fetch('http://localhost:5000/api/values')
+    .then(response => response.json())
+    .then(jsonResponse => console.log(jsonResponse))
+    .catch(err => console.log(err, "error fetching values data"));
+    this.setState({
+      values: [{ id: 1, name: 'value 101' }, { id: 2, name: 'value 202' }]
+    })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <ul>
+            {this.state.values.map((value: any) => (
+            <li>{value.name}</li>
+            ))
+          }
+          </ul>
+        </header>
+
+      </div>)
+  }
 }
 
 export default App;
