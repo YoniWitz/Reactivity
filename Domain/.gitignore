@@ -182,10 +182,10 @@ ClientBin/
 orleans.codegen.cs
 
 /node_modules
+
 .DS_Store
 appsettings.json
 *.db
-
 # RIA/Silverlight projects
 Generated_Code/
 
