@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Header, Icon, List } from 'semantic-ui-react';
 import './App.css';
 
 class App extends Component {
@@ -10,25 +10,30 @@ class App extends Component {
   //called immediately after the component is mounted
   componentDidMount() {
     fetch('http://localhost:5000/api/values')
-    .then(response => response.json())
-    .then(jsonResponse => console.log(jsonResponse))
-    .catch(err => console.log(err, "error fetching values data"));
-    this.setState({
-      values: [{ id: 1, name: 'value 101' }, { id: 2, name: 'value 202' }]
-    })
+      .then(response => response.json())
+      .then(jsonResponse => {
+        this.setState({
+          values: jsonResponse
+        })
+      })
+      .catch(err => console.log(err, "error fetching values data"));
+
   }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <ul>
-            {this.state.values.map((value: any) => (
-            <li key={value.id}>{value.name}</li>
+      <div>
+        <Header as='h2'>
+          <Icon name='users' />
+          <Header.Content>Reacitivity</Header.Content>
+          <List>
+          {this.state.values.map((value: any) => (
+              <List.Item key={value.id}>{value.name}</List.Item>
             ))
-          }
-          </ul>
-        </header>
+            }
+        
+          </List>
+        </Header>
 
       </div>)
   }
