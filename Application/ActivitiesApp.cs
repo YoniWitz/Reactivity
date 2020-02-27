@@ -32,17 +32,17 @@ namespace Application
         {
             _context.Activities.Add(activity);
             var success = await _context.SaveChangesAsync() > 0;
-            
+
             if (success) return success;
             else throw new Exception("problem saving activity");
         }
 
         public async Task<bool> PutActivity(Activity activity)
         {
-          var currentActivity = await _context.Activities.FindAsync(activity.Id);
-            if(currentActivity == null)
-                {throw new Exception("Could not find activity");}
-            
+            var currentActivity = await _context.Activities.FindAsync(activity.Id);
+            if (currentActivity == null)
+            { throw new Exception("Could not find activity"); }
+
             currentActivity.Category = activity.Category ?? currentActivity.Category;
             currentActivity.Title = activity.Title ?? currentActivity.Title;
             currentActivity.City = activity.City ?? currentActivity.City;
@@ -51,10 +51,10 @@ namespace Application
             currentActivity.Venue = activity.Venue ?? currentActivity.Venue;
 
             var success = await _context.SaveChangesAsync() > 0;
-            
+
             if (success) return success;
             else throw new Exception("problem saving activity");
-             
+
         }
         private bool _disposed;
 
