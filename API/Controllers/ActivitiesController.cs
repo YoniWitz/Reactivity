@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application;
-using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +40,14 @@ namespace API.Controllers
         public async Task<ActionResult<Activity>> Post(Activity activity){
             await _activitiesApp.PostActivity(activity);
             return CreatedAtAction(nameof(Get), new { id = activity.Id }, activity);
+        }
+
+        //PUT api/activities/1
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, Activity activity){
+            activity.Id = id;
+            await _activitiesApp.PutActivity(activity);
+            return NoContent();
         }
     }
 }

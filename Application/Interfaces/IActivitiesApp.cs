@@ -13,6 +13,8 @@ namespace Application.Interfaces
 
         Task<bool> PostActivity(Activity activity);
 
+        Task<bool> PutActivity(Activity activity);
+
         // void Save();
     }
 
