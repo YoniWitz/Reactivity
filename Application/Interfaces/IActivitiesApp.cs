@@ -9,6 +9,8 @@ namespace Application.Interfaces
     {   
            Task<List<Activity>> GetActivities();
 
+           Task<Activity> GetActivity(Guid id);
+
         // void InsertBlog(Activity blog);
 
         // void Save();
