@@ -22,12 +22,21 @@ namespace Application
             return activity;
         }
 
-        public async Task<List<Activity>> GetActivities(){
+        public async Task<List<Activity>> GetActivities()
+        {
             var activities = await _context.Activities.ToListAsync();
             return activities;
         }
 
-         private bool _disposed;
+        public async Task<bool> PostActivity(Activity activity)
+        {
+            _context.Activities.Add(activity);
+            var success = await _context.SaveChangesAsync() > 0;
+            
+            if (success) return success;
+            else throw new Exception("problem saving activity");
+        }
+        private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -47,5 +56,7 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
     }
 }

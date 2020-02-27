@@ -11,7 +11,7 @@ namespace Application.Interfaces
 
            Task<Activity> GetActivity(Guid id);
 
-        // void InsertBlog(Activity blog);
+         Task<bool> PostActivity(Activity activity);
 
         // void Save();
     }

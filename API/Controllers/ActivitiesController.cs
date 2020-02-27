@@ -19,19 +19,28 @@ namespace API.Controllers
             _activitiesApp = activitiesApp;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
+        // GET api/activities/5
+        [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<Activity>> Get(Guid id)
         {
-            return Ok(await _activitiesApp.GetActivity(id));
+            var activity = await _activitiesApp.GetActivity(id);
+            return Ok(activity);
         }
 
         // GET api/activities
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> Get()
         {
-            return Ok(await _activitiesApp.GetActivities());
+            var activities = await _activitiesApp.GetActivities();
+            return Ok(activities);
 
+        }
+
+        //POST api/activities
+        [HttpPost]
+        public async Task<ActionResult<Activity>> Post(Activity activity){
+            await _activitiesApp.PostActivity(activity);
+            return CreatedAtAction(nameof(Get), new { id = activity.Id }, activity);
         }
     }
 }
