@@ -16,6 +16,12 @@ namespace Application
             _context = context;
         }
 
+        public async Task<Activity> GetActivity(Guid id)
+        {
+            var activity = await _context.Activities.FindAsync(id);
+            return activity;
+        }
+
         public async Task<List<Activity>> GetActivities(){
             var activities = await _context.Activities.ToListAsync();
             return activities;
@@ -34,6 +40,7 @@ namespace Application
             }
             _disposed = true;
         }
+
 
         public void Dispose()
         {

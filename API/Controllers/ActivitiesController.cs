@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application;
@@ -18,11 +19,19 @@ namespace API.Controllers
             _activitiesApp = activitiesApp;
         }
 
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Activity>> Get(Guid id)
+        {
+            return Ok(await _activitiesApp.GetActivity(id));
+        }
+
         // GET api/activities
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> Get(){
-        return await _activitiesApp.GetActivities();   
-           
+        public async Task<ActionResult<List<Activity>>> Get()
+        {
+            return Ok(await _activitiesApp.GetActivities());
+
         }
     }
 }
