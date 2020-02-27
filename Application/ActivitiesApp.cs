@@ -36,6 +36,26 @@ namespace Application
             if (success) return success;
             else throw new Exception("problem saving activity");
         }
+
+        public async Task<bool> PutActivity(Activity activity)
+        {
+          var currentActivity = await _context.Activities.FindAsync(activity.Id);
+            if(currentActivity == null)
+                {throw new Exception("Could not find activity");}
+            
+            currentActivity.Category = activity.Category ?? currentActivity.Category;
+            currentActivity.Title = activity.Title ?? currentActivity.Title;
+            currentActivity.City = activity.City ?? currentActivity.City;
+            currentActivity.Date = activity.Date ?? currentActivity.Date;
+            currentActivity.Description = activity.Description ?? currentActivity.Description;
+            currentActivity.Venue = activity.Venue ?? currentActivity.Venue;
+
+            var success = await _context.SaveChangesAsync() > 0;
+            
+            if (success) return success;
+            else throw new Exception("problem saving activity");
+             
+        }
         private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
