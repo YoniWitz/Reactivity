@@ -5,15 +5,15 @@ using Domain;
 
 namespace Application.Interfaces
 {
-     public interface IActivitiesApp : IDisposable
-    {   
-           Task<List<Activity>> GetActivities();
+    public interface IActivitiesApp : IDisposable
+    {
+        Task<List<Activity>> GetActivities();
 
-           Task<Activity> GetActivity(Guid id);
+        Task<Activity> GetActivity(Guid id);
 
-         Task<bool> PostActivity(Activity activity);
+        Task<bool> PostActivity(Activity activity);
 
         // void Save();
     }
-    
+
 }

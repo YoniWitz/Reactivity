@@ -49,8 +49,6 @@ namespace Application
             }
             _disposed = true;
         }
-
-
         public void Dispose()
         {
             Dispose(true);
