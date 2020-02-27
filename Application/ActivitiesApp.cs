@@ -37,11 +37,11 @@ namespace Application
             else throw new Exception("problem saving activity");
         }
 
-        public async Task<bool> PutActivity(Activity activity)
+        public async Task<Activity> PutActivity(Activity activity)
         {
             var currentActivity = await _context.Activities.FindAsync(activity.Id);
             if (currentActivity == null)
-            { throw new Exception("Could not find activity"); }
+            { return null; }
 
             currentActivity.Category = activity.Category ?? currentActivity.Category;
             currentActivity.Title = activity.Title ?? currentActivity.Title;
@@ -52,10 +52,24 @@ namespace Application
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (success) return success;
+            if (success) return currentActivity;
             else throw new Exception("problem saving activity");
-
         }
+
+        public async Task<bool> DeleteActivity(Guid id)
+        {
+            var activity = await _context.Activities.FindAsync(id);
+
+            if (activity == null)
+                return false;
+
+            _context.Activities.Remove(activity);
+            var success = await _context.SaveChangesAsync() > 0;
+
+            if (success) return true;
+            else throw new Exception("error deleting record");
+        }
+
         private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
