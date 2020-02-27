@@ -44,10 +44,24 @@ namespace API.Controllers
 
         //PUT api/activities/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, Activity activity){
+        public async Task<ActionResult> Put(Guid id, Activity activity){
             activity.Id = id;
-            await _activitiesApp.PutActivity(activity);
-            return NoContent();
+            var updatedActivity = await _activitiesApp.PutActivity(activity);
+            if(updatedActivity == null)
+                return NotFound();
+
+            return Ok(updatedActivity);
+        }
+
+        //Delete api/activities
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id){
+            var deleteSuccess = await _activitiesApp.DeleteActivity(id);
+            
+            if(!deleteSuccess)
+                return NotFound();
+
+            return Ok();
         }
     }
 }
