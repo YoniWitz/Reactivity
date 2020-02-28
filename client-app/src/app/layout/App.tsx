@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { List, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { IActivity } from "./../models/acitivity";
 import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
