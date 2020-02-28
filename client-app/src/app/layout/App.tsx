@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { List, Container } from "semantic-ui-react";
 import { IActivity } from "./../models/acitivity";
 import { Navbar } from "../../components/Navbar";
-
+import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
@@ -18,12 +18,8 @@ const App = () => {
   return (
     <Fragment>
       <Navbar />
-      <Container style={{marginTop:'7em'}}>
-        <List>
-          {activities.map(activity => (
-            <List.Item key={activity.id}>{activity.title}</List.Item>
-          ))}
-        </List>
+      <Container style={{ marginTop: "7em" }}>
+        <ActivityDashboard activities={activities} />
       </Container>
     </Fragment>
   );
