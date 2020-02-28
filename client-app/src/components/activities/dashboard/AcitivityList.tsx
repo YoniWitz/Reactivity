@@ -10,7 +10,7 @@ export const AcitivityList: React.FC<IProps> = ({ activities }) => {
     <Segment clearing>
       <Item.Group divided>
         {activities.map(activity => (
-          <Item>
+          <Item key={activity.id}>
             <Item.Image size="tiny" src="/images/wireframe/image.png" />
 
             <Item.Content>
