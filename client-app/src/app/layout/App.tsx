@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Header, Icon, List } from 'semantic-ui-react';
+import {IActivity} from './../models/acitivity';
 
-class App extends Component {
-  state = {
-    values: []
+interface IState {
+  activities : IActivity[]
+}
+class App extends Component<{}, IState> {
+  readonly state : IState= {
+    activities: []
   }
 
   //called immediately after the component is mounted
   componentDidMount() {
-    fetch('http://localhost:5000/api/values')
+    fetch('http://localhost:5000/api/activities')
       .then(response => response.json())
-      .then(jsonResponse => {
+      .then((jsonResponse:IActivity[]) => {
         this.setState({
-          values: jsonResponse
+          activities: jsonResponse
         })
       })
-      .catch(err => console.log(err, "error fetching values data"));
-
+      .catch(err =>console.log(err, "error fetching activities data"));
   }
 
   render() {
@@ -27,8 +30,8 @@ class App extends Component {
           <Header.Content>Reacitivity</Header.Content>
         </Header>
         <List>
-          {this.state.values.map((value: any) => (
-            <List.Item key={value.id}>{value.name}</List.Item>
+          {this.state.activities.map((activitie) => (
+            <List.Item key={activitie.id}>{activitie.title}</List.Item>
           ))
           }
         </List>
