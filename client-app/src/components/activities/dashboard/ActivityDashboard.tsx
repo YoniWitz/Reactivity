@@ -10,10 +10,12 @@ interface IProps {
 }
 export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+  let [editMode, setEditMode] = useState<boolean>(false);
 
-  let selectActivity = (id: string) => {
-    setSelectedActivity(activities.filter(activity => activity.id === id)[0]);
-  };
+  const selectActivity = (id: string) => setSelectedActivity(activities.filter(activity => activity.id === id)[0]);
+  const handleEditMode = (isEdit:boolean) => setEditMode(isEdit);
+
+
   return (
     <Grid>
       <Grid.Column width="10">
@@ -23,8 +25,8 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
         />
       </Grid.Column>
       <Grid.Column width="6">
-        {selectedActivity &&  <ActivityDetails selectedActivity={selectedActivity} />}
-        <ActivityForm />
+        {selectedActivity && !editMode && <ActivityDetails selectedActivity={selectedActivity} handleEditMode={handleEditMode}/>}
+        {editMode && <ActivityForm />}
       </Grid.Column>
     </Grid>
   );
