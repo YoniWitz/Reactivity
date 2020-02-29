@@ -4,8 +4,9 @@ import { IActivity } from "../../../app/models/acitivity";
 
 interface IProps {
   selectedActivity: IActivity;
+  handleEditMode: (isEdit: boolean) => void;
 }
-export const ActivityDetails: React.FC<IProps> = ({ selectedActivity }) => {
+export const ActivityDetails: React.FC<IProps> = ({ selectedActivity, handleEditMode }) => {
   return (
     <Card fluid>
       <Image
@@ -22,7 +23,7 @@ export const ActivityDetails: React.FC<IProps> = ({ selectedActivity }) => {
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths="2">
-          <Button basic color="blue" content="Edit" />
+          <Button onClick={() => handleEditMode(true)} basic color="blue" content="Edit" />
           <Button basic color="grey" content="Cancel" />
         </Button.Group>
       </Card.Content>
