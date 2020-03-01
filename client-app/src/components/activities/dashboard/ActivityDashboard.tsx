@@ -13,7 +13,6 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
   let [editMode, setEditMode] = useState<boolean>(false);
 
   const handleSelectedActivity = (id: string | null) => setSelectedActivity(activities.filter(activity => activity.id === id)[0]);
-  const handleEditMode = (isEdit:boolean) => setEditMode(isEdit);
 
   return (
     <Grid>
@@ -24,8 +23,8 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
         />
       </Grid.Column>
       <Grid.Column width="6">
-        {selectedActivity && !editMode && <ActivityDetails selectedActivity={selectedActivity} handleSelectedActivity={handleSelectedActivity} handleEditMode={handleEditMode}/>}
-        {editMode && <ActivityForm onCancelForm={handleEditMode}/>}
+        {selectedActivity && !editMode && <ActivityDetails selectedActivity={selectedActivity} handleSelectedActivity={handleSelectedActivity} setEditMode={setEditMode} />}
+        {editMode && <ActivityForm onCancelForm={setEditMode} />}
       </Grid.Column>
     </Grid>
   );

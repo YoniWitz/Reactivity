@@ -4,7 +4,6 @@ import { ActivityForm } from "./activities/form/ActivityForm";
 
 export const Navbar = () => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
-  const handleModalOpen = (isModalOpen: boolean) => setModalOpen(isModalOpen);
 
   return (
     <Menu fixed='top' inverted>
@@ -18,10 +17,10 @@ export const Navbar = () => {
           Reactivity
         </Menu.Item>
         <Menu.Item name="Activities" />
-        <Modal trigger={<Button color="green" size='medium' onClick={() => handleModalOpen(true)}>Create Activity</Button>}
+        <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>}
           open={modalOpen}
         >
-          <ActivityForm onCancelForm={handleModalOpen} />
+          <ActivityForm onCancelForm={setModalOpen} />
         </Modal>
       </Container>
     </Menu>
