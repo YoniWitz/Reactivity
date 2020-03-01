@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 
 interface IProps{
-  onCancelForm: (isEdit: boolean) => void;
+  onCancelForm: (isAlive: boolean) => void;
 }
 export const ActivityForm:React.FC<IProps> = ({onCancelForm}) => {
   return (
