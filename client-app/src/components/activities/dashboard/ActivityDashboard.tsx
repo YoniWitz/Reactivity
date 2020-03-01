@@ -7,8 +7,10 @@ import { ActivityForm } from "../form/ActivityForm";
 
 interface IProps {
   activities: IActivity[];
+  handleEditSubmit: (activity: IActivity) => void;
+
 }
-export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
+export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit }) => {
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   let [editMode, setEditMode] = useState<boolean>(false);
 
@@ -24,7 +26,7 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities }) => {
       </Grid.Column>
       <Grid.Column width="6">
         {selectedActivity && !editMode && <ActivityDetails selectedActivity={selectedActivity} handleSelectedActivity={handleSelectedActivity} setEditMode={setEditMode} />}
-        {editMode && <ActivityForm onCancelForm={setEditMode} presentActivity={selectedActivity} />}
+        {editMode && <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit = {handleEditSubmit} onCancelForm={setEditMode} presentActivity={selectedActivity} />}
       </Grid.Column>
     </Grid>
   );
