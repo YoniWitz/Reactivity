@@ -4,19 +4,17 @@ import { IActivity } from "../../../app/models/acitivity";
 
 interface IProps {
   activities: IActivity[];
-  selectActivity: (id: string) => void;
+  handleSelectedActivity: (id: string | null) => void;
 }
 export const AcitivityList: React.FC<IProps> = ({
   activities,
-  selectActivity
+  handleSelectedActivity
 }) => {
   return (
     <Segment clearing>
       <Item.Group divided>
         {activities.map(activity => (
           <Item key={activity.id}>
-            <Item.Image size="tiny" src="/images/wireframe/image.png" />
-
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>
               <Item.Meta>{activity.date}</Item.Meta>
@@ -31,7 +29,7 @@ export const AcitivityList: React.FC<IProps> = ({
                   floated="right"
                   content="View"
                   color="blue"
-                  onClick={() => selectActivity(activity.id)}
+                  onClick={() => handleSelectedActivity(activity.id)}
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>

@@ -1,7 +1,11 @@
-import React from "react";
-import { Menu, Container, Button } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Menu, Container, Button, Modal } from "semantic-ui-react";
+import { ActivityForm } from "./activities/form/ActivityForm";
 
 export const Navbar = () => {
+  let [modalOpen, setModalOpen] = useState<boolean>(false);
+  const handleModalOpen = (isModalOpen: boolean) => setModalOpen(isModalOpen);
+
   return (
     <Menu fixed='top' inverted>
       <Container>
@@ -14,9 +18,11 @@ export const Navbar = () => {
           Reactivity
         </Menu.Item>
         <Menu.Item name="Activities" />
-        <Menu.Item name="Friends">
-          <Button positive content="Create activity" />
-        </Menu.Item>
+        <Modal trigger={<Button color="green" size='medium' onClick={() => handleModalOpen(true)}>Create Activity</Button>}
+          open={modalOpen}
+        >
+          <ActivityForm onCancelForm={handleModalOpen} />
+        </Modal>
       </Container>
     </Menu>
   );

@@ -5,13 +5,15 @@ import { IActivity } from "../../../app/models/acitivity";
 interface IProps {
   selectedActivity: IActivity;
   handleEditMode: (isEdit: boolean) => void;
+  handleSelectedActivity: (id: string | null) => void;
 }
-export const ActivityDetails: React.FC<IProps> = ({ selectedActivity, handleEditMode }) => {
+export const ActivityDetails: React.FC<IProps> = ({ selectedActivity, handleEditMode, handleSelectedActivity }) => {
   return (
     <Card fluid>
       <Image
-        src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+        src={`assets/categoryImages/${selectedActivity.category}.jpg`}
         wrapped
+        alt={selectedActivity.category}
         ui={false}
       />
       <Card.Content>
@@ -24,7 +26,7 @@ export const ActivityDetails: React.FC<IProps> = ({ selectedActivity, handleEdit
       <Card.Content extra>
         <Button.Group widths="2">
           <Button onClick={() => handleEditMode(true)} basic color="blue" content="Edit" />
-          <Button basic color="grey" content="Cancel" />
+          <Button basic onClick={()=>handleSelectedActivity(null)} color="grey" content="Cancel" />
         </Button.Group>
       </Card.Content>
     </Card>

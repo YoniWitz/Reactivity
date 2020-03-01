@@ -1,7 +1,10 @@
 import React from "react";
-import { Segment, Form } from "semantic-ui-react";
+import { Segment, Form, Button } from "semantic-ui-react";
 
-export const ActivityForm = () => {
+interface IProps{
+  onCancelForm: (isEdit: boolean) => void;
+}
+export const ActivityForm:React.FC<IProps> = ({onCancelForm}) => {
   return (
     <Segment>
       <Form>
@@ -11,6 +14,10 @@ export const ActivityForm = () => {
         <Form.Input type="date" placeholder="Date" />
         <Form.Input placeholder="City" />
         <Form.Input placeholder="Venue" />
+        <Button.Group widths="2">
+          <Button floated='right' positive type="submit" content="Submit" />
+          <Button floated='left' onClick={() => onCancelForm(false)} content="Cancel"/>
+        </Button.Group>     
       </Form>
     </Segment>
   );
