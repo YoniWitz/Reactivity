@@ -6,7 +6,7 @@ import { ActivityDashboard } from "../../components/activities/dashboard/Activit
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
-
+  
   //called immediately after the component is mounted
   useEffect(() => {
     fetch("http://localhost:5000/api/activities")
