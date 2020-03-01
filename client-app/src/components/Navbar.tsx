@@ -20,7 +20,7 @@ export const Navbar = () => {
         <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>}
           open={modalOpen}
         >
-          <ActivityForm onCancelForm={setModalOpen} />
+          <ActivityForm onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
       </Container>
     </Menu>
