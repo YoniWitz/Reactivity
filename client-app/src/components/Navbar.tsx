@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Menu, Container, Button, Modal } from "semantic-ui-react";
 import { ActivityForm } from "./activities/form/ActivityForm";
+import { IActivity } from "../app/models/acitivity";
 
-export const Navbar = () => {
+interface IProps {
+  handleCreateSubmit: (activity: IActivity) => void;
+}
+export const Navbar: React.FC<IProps> = ({ handleCreateSubmit }) => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
 
+  let setSelectedActivity = (activity: IActivity) => {
+    
+
+  }
   return (
     <Menu fixed='top' inverted>
       <Container>
@@ -20,7 +28,7 @@ export const Navbar = () => {
         <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>}
           open={modalOpen}
         >
-          <ActivityForm onCancelForm={setModalOpen} presentActivity={null} />
+          <ActivityForm setSelectedActivity = {setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
       </Container>
     </Menu>
