@@ -8,10 +8,11 @@ import { ActivityForm } from "../form/ActivityForm";
 interface IProps {
   activities: IActivity[];
   handleEditSubmit: (activity: IActivity) => void;
-
+  selectedActivity: IActivity | null;
+  setSelectedActivity:((activity: IActivity) => void);
 }
-export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit }) => {
-  let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit, selectedActivity, setSelectedActivity }) => {
+ 
   let [editMode, setEditMode] = useState<boolean>(false);
 
   const handleSelectedActivity = (id: string | null) => setSelectedActivity(activities.filter(activity => activity.id === id)[0]);

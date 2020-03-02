@@ -6,7 +6,7 @@ import { ActivityDashboard } from "../../components/activities/dashboard/Activit
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
-
+  let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   //called immediately after the component is mounted
   useEffect(() => {
     fetch("http://localhost:5000/api/activities")
@@ -22,14 +22,14 @@ const App = () => {
   const handleEditSubmit = (activity: IActivity) => {
     setActivities([...activities.filter(returnActivity => returnActivity.id !== activity.id), activity])
   }
-  return ( 
+  return (
     <Fragment>
-      <Navbar handleCreateSubmit={handleCreateSubmit} />
-        <Container style={{ marginTop: "7em" }}>
-          <ActivityDashboard handleEditSubmit={handleEditSubmit} activities={activities} />
-        </Container>
+      <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
+      <Container style={{ marginTop: "7em" }}>
+        <ActivityDashboard setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />
+      </Container>
     </Fragment>
-    );
-  };
-  
-  export default App;
+  );
+};
+
+export default App;
