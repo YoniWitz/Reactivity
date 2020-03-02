@@ -12,7 +12,15 @@ const App = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/activities")
       .then(response => response.json())
-      .then((jsonResponse: IActivity[]) => setActivities(jsonResponse))
+      .then((jsonResponse: IActivity[]) => {
+        let returnedActivities:IActivity[] = [];
+        jsonResponse.forEach(activity =>
+          {
+            activity.date = activity.date.split('.')[0].replace('T', ' ');
+            returnedActivities.push(activity)
+          })
+        setActivities(returnedActivities);
+      })
       .catch(err => console.log(err, "error fetching activities data"));
   }, []);
 

@@ -6,7 +6,7 @@ interface IProps {
   activities: IActivity[];
   handleSelectedActivity: (id: string | null) => void;
 }
-export const AcitivityList: React.FC<IProps> = ({activities, handleSelectedActivity}) => {
+export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActivity }) => {
   return (
     <Segment clearing>
       <Item.Group divided>
