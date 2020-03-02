@@ -26,11 +26,15 @@ const App = () => {
   const handleEditSubmit = (editedActivity: IActivity) => {
     setActivities([...activities.filter(activity => activity.id !== editedActivity.id), editedActivity])
   }
+
+  const handleDeleteActivity = (id: string) => {
+    setActivities(activities.filter(activity => activity.id !== id));
+  }
   return (
     <Fragment>
       <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: "7em" }}>
-        <ActivityDashboard setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />
+        <ActivityDashboard handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />
       </Container>
     </Fragment>
   );

@@ -5,8 +5,9 @@ import { IActivity } from "../../../app/models/acitivity";
 interface IProps {
   activities: IActivity[];
   handleSelectedActivity: (id: string | null) => void;
+  handleDeleteActivity: (id: string) => void;
 }
-export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActivity }) => {
+export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActivity, handleDeleteActivity }) => {
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -22,6 +23,12 @@ export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActi
                 </div>
               </Item.Description>
               <Item.Extra>
+                <Button
+                  floated="right"
+                  content="Delete"
+                  color="red"
+                  onClick={() => handleDeleteActivity(activity.id)}
+                />
                 <Button
                   floated="right"
                   content="View"

@@ -10,8 +10,9 @@ interface IProps {
   handleEditSubmit: (activity: IActivity) => void;
   selectedActivity: IActivity | null;
   setSelectedActivity: (activity: IActivity) => void;
+  handleDeleteActivity: (id: string) => void;
 }
-export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit, selectedActivity, setSelectedActivity }) => {
+export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit, selectedActivity, setSelectedActivity, handleDeleteActivity }) => {
 
   let [editMode, setEditMode] = useState<boolean>(false);
 
@@ -24,6 +25,7 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubm
     <Grid>
       <Grid.Column width="10">
         <AcitivityList
+          handleDeleteActivity={handleDeleteActivity}
           activities={activities}
           handleSelectedActivity={handleSelectedActivity}
         />
