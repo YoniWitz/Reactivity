@@ -7,6 +7,7 @@ import { ActivityDashboard } from "../../components/activities/dashboard/Activit
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+  
   //called immediately after the component is mounted
   useEffect(() => {
     fetch("http://localhost:5000/api/activities")
@@ -15,12 +16,12 @@ const App = () => {
       .catch(err => console.log(err, "error fetching activities data"));
   }, []);
 
-  const handleCreateSubmit = (activity: IActivity) => {
-    setActivities([...activities, activity]);
+  const handleCreateSubmit = (newActivity: IActivity) => {
+    setActivities([...activities, newActivity]);
   }
 
-  const handleEditSubmit = (activity: IActivity) => {
-    setActivities([...activities.filter(returnActivity => returnActivity.id !== activity.id), activity])
+  const handleEditSubmit = (editedActivity: IActivity) => {
+    setActivities([...activities.filter(activity => activity.id !== editedActivity.id), editedActivity])
   }
   return (
     <Fragment>
