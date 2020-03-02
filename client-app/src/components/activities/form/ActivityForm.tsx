@@ -46,7 +46,7 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
 
   return (
     <Segment>
-      <Form onSubmit={(e) => handleFormSubmit(e)}>
+      <Form onSubmit={handleFormSubmit}>
         <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
         <Form.TextArea rows="2" placeholder="Description" value={activity.description} name="description" onChange={handleInputChange} />
         <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />
