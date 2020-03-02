@@ -7,7 +7,7 @@ interface IProps {
   onCancelForm: (isAlive: boolean) => void;
   presentActivity: IActivity | null;
   handleSubmit: (activity: IActivity) => void;
-  setSelectedActivity:((activity: IActivity) => void);
+  setSelectedActivity:(activity: IActivity) => void;
 }
 export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, handleSubmit, setSelectedActivity }) => {
 
@@ -36,16 +36,17 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
     setActivity({ ...activity, [name]: value })
   }
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>, activity: IActivity) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(activity.id.length === 0) activity.id = uuid(); 
     handleSubmit(activity);    
     onCancelForm(false);
     setSelectedActivity(activity);
   }
+
   return (
     <Segment>
-      <Form onSubmit={(e) => handleFormSubmit(e, activity)}>
+      <Form onSubmit={(e) => handleFormSubmit(e)}>
         <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
         <Form.TextArea rows="2" placeholder="Description" value={activity.description} name="description" onChange={handleInputChange} />
         <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />

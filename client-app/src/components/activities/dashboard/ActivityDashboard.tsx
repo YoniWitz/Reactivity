@@ -9,7 +9,7 @@ interface IProps {
   activities: IActivity[];
   handleEditSubmit: (activity: IActivity) => void;
   selectedActivity: IActivity | null;
-  setSelectedActivity:((activity: IActivity) => void);
+  setSelectedActivity:(activity: IActivity) => void;
 }
 export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit, selectedActivity, setSelectedActivity }) => {
  

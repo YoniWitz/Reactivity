@@ -5,7 +5,7 @@ import { IActivity } from "../app/models/acitivity";
 
 interface IProps {
   handleCreateSubmit: (activity: IActivity) => void;
-  setSelectedActivity:((activity: IActivity) => void);
+  setSelectedActivity: ((activity: IActivity) => void);
 }
 export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity }) => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -22,9 +22,7 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           Reactivity
         </Menu.Item>
         <Menu.Item name="Activities" />
-        <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>}
-          open={modalOpen}
-        >
+        <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>} open={modalOpen}>
           <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
       </Container>
