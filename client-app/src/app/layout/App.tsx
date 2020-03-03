@@ -3,6 +3,7 @@ import { Container } from "semantic-ui-react";
 import { IActivity } from "./../models/acitivity";
 import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
+import agent from "../api/agent";
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
@@ -10,25 +11,31 @@ const App = () => {
 
   //called immediately after the component is mounted
   useEffect(() => {
-    fetch("http://localhost:5000/api/activities")
-      .then(response => response.json())
-      .then((jsonResponse: IActivity[]) => {
-        jsonResponse.forEach(activity => activity.date = activity.date.split('.')[0].replace('T', ' '));
-        setActivities(jsonResponse);
+    agent.Activities.list()
+      .then(returnedActivityList => {
+        returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
+        setActivities(returnedActivityList);
       })
       .catch(err => console.log(err, "error fetching activities data"));
   }, []);
 
   const handleCreateSubmit = (newActivity: IActivity) => {
-    setActivities([...activities, newActivity]);
+    agent.Activities.create(newActivity)
+      .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
+      .catch(err => console.log(err));
+    ;
   }
 
   const handleEditSubmit = (editedActivity: IActivity) => {
-    setActivities([...activities.filter(activity => activity.id !== editedActivity.id), editedActivity])
+    agent.Activities.update(editedActivity.id, editedActivity)
+      .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
+      .catch(err => console.log(err));
   }
 
   const handleDeleteActivity = (id: string) => {
-    setActivities(activities.filter(activity => activity.id !== id));
+    agent.Activities.delete(id)
+      .then(() => setActivities(activities.filter(activity => activity.id !== id)))
+      .catch(err => console.log(err));
   }
   return (
     <Fragment>
