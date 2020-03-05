@@ -4,7 +4,7 @@ import { ActivityForm } from "./activities/form/ActivityForm";
 import { IActivity } from "../app/models/acitivity";
 
 interface IProps {
-  handleCreateSubmit: (activity: IActivity) => void;
+  handleCreateSubmit: (activity: IActivity) => Promise<unknown>;
   setSelectedActivity: ((activity: IActivity) => void);
 }
 export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity }) => {

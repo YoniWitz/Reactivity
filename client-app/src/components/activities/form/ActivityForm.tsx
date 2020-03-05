@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/acitivity";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 interface IProps {
   onCancelForm: (isAlive: boolean) => void;
   presentActivity: IActivity | null;
-  handleSubmit: (activity: IActivity) => void;
-  setSelectedActivity:(activity: IActivity) => void;
+  handleSubmit: (activity: IActivity) => Promise<unknown>;
+  setSelectedActivity: (activity: IActivity) => void;
 }
 export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, handleSubmit, setSelectedActivity }) => {
 
@@ -29,6 +29,7 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
   }
 
   let [activity, setActivity] = useState<IActivity>(initActivity);
+  let [loading, setLoading] = useState(false);
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let { name, value } = event.currentTarget;
@@ -38,15 +39,19 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(activity.id.length === 0) activity.id = uuid(); 
-    handleSubmit(activity);    
-    onCancelForm(false);
-    setSelectedActivity(activity);
+    setLoading(true);
+    if (activity.id.length === 0) activity.id = uuid();
+    handleSubmit(activity)
+      .then(() => {
+        onCancelForm(false);
+        setSelectedActivity(activity);
+        setLoading(false);
+      });
   }
 
   return (
     <Segment>
-      <Form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit} loading={loading}>
         <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
         <Form.TextArea rows="2" placeholder="Description" value={activity.description} name="description" onChange={handleInputChange} />
         <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />

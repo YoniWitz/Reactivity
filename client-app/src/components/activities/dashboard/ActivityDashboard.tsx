@@ -7,15 +7,15 @@ import { ActivityForm } from "../form/ActivityForm";
 
 interface IProps {
   activities: IActivity[];
-  handleEditSubmit: (activity: IActivity) => void;
+  handleEditSubmit: (activity: IActivity) => Promise<unknown>;
   selectedActivity: IActivity | null;
   setSelectedActivity: (activity: IActivity) => void;
-  handleDeleteActivity: (id: string) => void;
+  handleDeleteActivity: (id: string) => Promise<unknown>;
 }
 export const ActivityDashboard: React.FC<IProps> = ({ activities, handleEditSubmit, selectedActivity, setSelectedActivity, handleDeleteActivity }) => {
 
   let [editMode, setEditMode] = useState<boolean>(false);
-
+  
   const handleSelectedActivity = (id: string | null) => {
     setSelectedActivity(activities.filter(activity => activity.id === id)[0]);
     setEditMode(false);
