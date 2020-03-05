@@ -8,12 +8,14 @@ interface IProps {
   handleDeleteActivity: (id: string) => Promise<unknown>;
 }
 export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActivity, handleDeleteActivity }) => {
-  let [loading, setLoading] = useState<boolean>(false);
+  let [target, setTarget] = useState<string>('');
 
   const handleDeleteButton = (id: string) => {
-    setLoading(true);
+    setTarget(id);
     handleDeleteActivity(id)
-    .then(() => setLoading(false))
+      .then(() => {
+        handleSelectedActivity('');
+      });
   }
 
   return (
@@ -36,7 +38,7 @@ export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActi
                   content="Delete"
                   color="red"
                   onClick={() => handleDeleteButton(activity.id)}
-                  loading={loading}
+                  loading={target === activity.id}
                 />
                 <Button
                   floated="right"
