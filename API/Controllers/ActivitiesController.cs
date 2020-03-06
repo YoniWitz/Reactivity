@@ -20,37 +20,37 @@ namespace API.Controllers
 
         // GET api/activities/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<Activity>> Get(Guid id)
+        public async Task<ActionResult<ActivityDTO>> Get(Guid id)
         {
-            var activity = await _activitiesApp.GetActivity(id);
-            return Ok(activity);
+            var activityDto = await _activitiesApp.GetActivityDTO(id);
+            return Ok(activityDto);
         }
 
         // GET api/activities
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> Get()
+        public async Task<ActionResult<List<ActivityDTO>>> Get()
         {
-            var activities = await _activitiesApp.GetActivities();
-            return Ok(activities);
+            var activitiesDtos = await _activitiesApp.GetActivitiesDTOs();
+            return Ok(activitiesDtos);
 
         }
 
         //POST api/activities
         [HttpPost]
-        public async Task<ActionResult<Activity>> Post(Activity activity){
-            await _activitiesApp.PostActivity(activity);
-            return CreatedAtAction(nameof(Get), new { id = activity.Id }, activity);
+        public async Task<ActionResult<ActivityDTO>> Post(ActivityDTO activityDto){
+            var createdActivityDto = await _activitiesApp.PostActivityDTO(activityDto);
+            return CreatedAtAction(nameof(Get), new { id = createdActivityDto.Id }, createdActivityDto);
         }
 
         //PUT api/activities/1
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, Activity activity){
-            activity.Id = id;
-            var updatedActivity = await _activitiesApp.PutActivity(activity);
-            if(updatedActivity == null)
+        public async Task<ActionResult> Put(Guid id, ActivityDTO activityDto){
+            activityDto.Id = id;
+            var updatedActivityDto = await _activitiesApp.PutActivityDTO(activityDto);
+            if(updatedActivityDto == null)
                 return NotFound();
 
-            return Ok(updatedActivity);
+            return Ok(updatedActivityDto);
         }
 
         //Delete api/activities
