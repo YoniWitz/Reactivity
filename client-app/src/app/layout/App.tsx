@@ -5,6 +5,8 @@ import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
 import { Loading } from "./Loading";
+import { Route } from "react-router-dom";
+import { HomePage } from "../../components/home/HomePage";
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
@@ -53,8 +55,11 @@ const App = () => {
   return ( 
     <Fragment>
       <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
-      <Container style={{ marginTop: "7em" }}>
-        <ActivityDashboard handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />
+      <Container style={{ marginTop: '7em' }}>
+        <Route exact path='/' component={HomePage}/>
+        <Route path='/activities' 
+        render={(props) => <ActivityDashboard {...props}  handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
+         />        
       </Container>
     </Fragment>
   );
