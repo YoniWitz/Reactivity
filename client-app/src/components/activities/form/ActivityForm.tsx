@@ -33,7 +33,6 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let { name, value } = event.currentTarget;
-    console.log(value)
     setActivity({ ...activity, [name]: value })
   }
 
@@ -60,7 +59,7 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
         <Button.Group widths="2">
           <Button floated='right' positive type="submit" content="Submit" />
-          <Button floated='left' onClick={() => onCancelForm(false)} content="Cancel" />
+          <Button floated='left' type="button" onClick={() => onCancelForm(false)} content="Cancel" />
         </Button.Group>
       </Form>
     </Segment>
