@@ -3,16 +3,15 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Domain.DTOs;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application
 {
-    public class UserApp : IAppUserApp
+    public class AppUserApp : IAppUserApp
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public UserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AppUserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,10 +31,10 @@ namespace Application
             return null;
         }
 
-        private static AppUserDTO AppUserToDTO(AppUser user) =>
+        private static AppUserDTO AppUserToDTO(AppUser appUser) =>
              new AppUserDTO
              {
-                 Email = user.Email
+                 Email = appUser.Email
              };
 
         private bool _disposed;
@@ -57,7 +56,5 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-
     }
 }
