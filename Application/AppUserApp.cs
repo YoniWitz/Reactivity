@@ -17,7 +17,7 @@ namespace Application
             _signInManager = signInManager;
         }
 
-        public async Task<AppUserDTO> GetAppUserDTO(AppUserDTO appUserDto)
+        public async Task<AppUserDTO> Login(AppUserDTO appUserDto)
         {
             var appUser = await _userManager.FindByEmailAsync(appUserDto.Email);
 
@@ -25,8 +25,13 @@ namespace Application
 
             if (result.Succeeded)
             {
-                //TODO
-                return AppUserToDTO(appUser);
+                return new AppUserDTO
+                {
+                    DisplayName = appUser.DisplayName,
+                    Token = "this will be a token",
+                    UserName = appUser.UserName,
+                    Image = null
+                };
             }
             return null;
         }
@@ -46,7 +51,7 @@ namespace Application
                 if (disposing)
                 {
                     _userManager.Dispose();
-                    //_signInManager.Dispose();
+                    // _signInManager.Dispose();
                 }
             }
             _disposed = true;

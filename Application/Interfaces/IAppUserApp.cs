@@ -6,6 +6,6 @@ namespace Application.Interfaces
 {
     public interface IAppUserApp  : IDisposable
     {
-           Task<AppUserDTO> GetAppUserDTO(AppUserDTO appUserDto);
+           Task<AppUserDTO> Login(AppUserDTO appUserDto);
     }
 }

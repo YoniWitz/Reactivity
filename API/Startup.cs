@@ -34,6 +34,7 @@ namespace API
             }));
 
             services.AddScoped<ActivitiesApp>();
+            services.AddScoped<AppUserApp>();
             services.AddControllers();
 
             var builder = services.AddIdentityCore<AppUser>();
