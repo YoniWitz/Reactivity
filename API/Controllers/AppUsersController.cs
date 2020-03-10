@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Application;
+using Application.Interfaces;
 using Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,9 @@ namespace API.Controllers
 {
     public class AppUsersController : BaseController
     {
-        private readonly AppUserApp _appUserApp;
+        private readonly IAppUserApp _appUserApp;
 
-        public AppUsersController(AppUserApp appUserApp)
+        public AppUsersController(IAppUserApp appUserApp)
         {
             _appUserApp = appUserApp;
         }

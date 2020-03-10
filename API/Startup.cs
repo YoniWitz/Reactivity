@@ -1,5 +1,7 @@
 using Application;
+using Application.Interfaces;
 using Domain;
+using Infrastucture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,8 +35,9 @@ namespace API
                 policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3001", "http://localhost:3000");
             }));
 
-            services.AddScoped<ActivitiesApp>();
-            services.AddScoped<AppUserApp>();
+            services.AddScoped<IActivitiesApp, ActivitiesApp>();
+            services.AddScoped<IAppUserApp, AppUserApp>();
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddControllers();
 
             var builder = services.AddIdentityCore<AppUser>();

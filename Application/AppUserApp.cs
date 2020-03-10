@@ -11,10 +11,12 @@ namespace Application
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AppUserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IJwtGenerator _jwtGenerator;
+        public AppUserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _jwtGenerator = jwtGenerator;
         }
 
         public async Task<AppUserDTO> Login(AppUserDTO appUserDto)
@@ -28,7 +30,7 @@ namespace Application
                 return new AppUserDTO
                 {
                     DisplayName = appUser.DisplayName,
-                    Token = "this will be a token",
+                    Token = _jwtGenerator.CreateToken(appUser),
                     UserName = appUser.UserName,
                     Image = null
                 };
