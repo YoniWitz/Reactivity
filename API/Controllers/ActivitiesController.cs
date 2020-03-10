@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application;
+using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,9 @@ namespace API.Controllers
 {
     public class ActivitiesController : BaseController
     {
-        private readonly ActivitiesApp _activitiesApp;
+        private readonly IActivitiesApp _activitiesApp;
 
-        public ActivitiesController(ActivitiesApp activitiesApp)
+        public ActivitiesController(IActivitiesApp activitiesApp)
         {
             _activitiesApp = activitiesApp;
         }
