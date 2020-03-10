@@ -1,5 +1,7 @@
 using Application;
+using Application.Interfaces;
 using Domain;
+using Infrastucture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +37,7 @@ namespace API
 
             services.AddScoped<ActivitiesApp>();
             services.AddScoped<AppUserApp>();
+            services.AddScoped<JwtGenerator>();
             services.AddControllers();
 
             var builder = services.AddIdentityCore<AppUser>();
