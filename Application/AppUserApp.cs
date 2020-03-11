@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Domain.DTOs;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application
 {
@@ -12,11 +15,46 @@ namespace Application
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtGenerator _jwtGenerator;
-        public AppUserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+        private readonly DataContext _context;
+        public AppUserApp(DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtGenerator = jwtGenerator;
+        }
+
+        public async Task<AppUserDTO> Register(AppUserRegistrationDTO appUserRegistrationDTO)
+        {
+            if (await _context.Users.Where(x =>
+            (x.Email == appUserRegistrationDTO.Email) ||
+            (x.UserName == appUserRegistrationDTO.UserName))
+            .AnyAsync())
+            {
+                return null;
+            }
+
+            var newUser = new AppUser
+            {
+                DisplayName = appUserRegistrationDTO.UserName,
+                Email = appUserRegistrationDTO.Email,
+                UserName = appUserRegistrationDTO.UserName
+            };
+
+            var createdUser = await _userManager.CreateAsync(newUser, appUserRegistrationDTO.Password);
+
+            if (createdUser.Succeeded)
+            {
+                return new AppUserDTO
+                {
+                    DisplayName = newUser.DisplayName,
+                    Token = _jwtGenerator.CreateToken(newUser),
+                    UserName = newUser.UserName,
+                    Image = null
+                };
+            }
+
+            return null;
         }
 
         public async Task<AppUserDTO> Login(AppUserDTO appUserDto)
@@ -63,5 +101,7 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
     }
 }

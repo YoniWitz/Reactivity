@@ -7,5 +7,6 @@ namespace Application.Interfaces
     public interface IAppUserApp  : IDisposable
     {
            Task<AppUserDTO> Login(AppUserDTO appUserDto);
+           Task<AppUserDTO> Register(AppUserRegistrationDTO appUserDto);
     }
 }

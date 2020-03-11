@@ -26,5 +26,15 @@ namespace API.Controllers
             }
             return loggedInUser;
         }
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<ActionResult<AppUserDTO>> Register(AppUserRegistrationDTO appUserRegistrationDTO){
+            var registeredUserDTO = await _appUserApp.Register(appUserRegistrationDTO);
+            if(registeredUserDTO == null)
+            {
+                 return BadRequest("error");
+            }
+              return registeredUserDTO;
+        }
     }
 }
