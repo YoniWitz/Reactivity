@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Application;
 using Application.Interfaces;
 using Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,6 +17,7 @@ namespace API.Controllers
         }
          //POST api/appusers
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Login(AppUserDTO appUserDTO){
             var loggedInUser = await _appUserApp.Login(appUserDTO);
             if(loggedInUser == null)
