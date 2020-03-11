@@ -17,54 +17,56 @@ namespace Application
             _context = context;
         }
 
-        public async Task<ActivityDTO> GetActivityDTO(Guid id)
+        public async Task<ActivityDTO> GetActivity(Guid id)
         {
             var activity = await _context.Activities.FindAsync(id);
+            if (activity == null) return null;
             return ActivityToDTO(activity);
         }
 
-        public async Task<List<ActivityDTO>> GetActivitiesDTOs()
+        public async Task<List<ActivityDTO>> GetActivities()
         {
-            var activitiesDtos = await _context.Activities.Select(x => ActivityToDTO(x)).ToListAsync();
-            return activitiesDtos;
+            var activitiesDTOs = await _context.Activities.Select(x => ActivityToDTO(x)).ToListAsync();
+            return activitiesDTOs;
         }
 
-        public async Task<ActivityDTO> PostActivityDTO(ActivityDTO activityDto)
+        public async Task<ActivityDTO> PostActivity(ActivityDTO activityDTO)
         {
-            var activity = new Activity{
-                Id = activityDto.Id,
-                 Category = activityDto.Category,
-                 City = activityDto.City,
-                 Date = activityDto.Date,
-                 Description = activityDto.Description,
-                 Title = activityDto.Title,
-                 Venue = activityDto.Venue
+            var activity = new Activity
+            {
+                Id = activityDTO.Id,
+                Category = activityDTO.Category,
+                City = activityDTO.City,
+                Date = activityDTO.Date,
+                Description = activityDTO.Description,
+                Title = activityDTO.Title,
+                Venue = activityDTO.Venue
             };
 
             _context.Activities.Add(activity);
             var success = await _context.SaveChangesAsync() > 0;
 
             if (success) return ActivityToDTO(activity);
-            else throw new Exception("problem saving activity");
+            else return null;
         }
 
-        public async Task<ActivityDTO> PutActivityDTO(ActivityDTO activityDto)
+        public async Task<ActivityDTO> PutActivity(ActivityDTO activityDTO)
         {
-            var currentActivity = await _context.Activities.FindAsync(activityDto.Id);
+            var currentActivity = await _context.Activities.FindAsync(activityDTO.Id);
             if (currentActivity == null)
-            { return null; }
+            { return new ActivityDTO { Message = "Activity not found" }; }
 
-            currentActivity.Category = activityDto.Category ?? currentActivity.Category;
-            currentActivity.Title = activityDto.Title ?? currentActivity.Title;
-            currentActivity.City = activityDto.City ?? currentActivity.City;
-            currentActivity.Date = activityDto.Date ?? currentActivity.Date;
-            currentActivity.Description = activityDto.Description ?? currentActivity.Description;
-            currentActivity.Venue = activityDto.Venue ?? currentActivity.Venue;
+            currentActivity.Category = activityDTO.Category ?? currentActivity.Category;
+            currentActivity.Title = activityDTO.Title ?? currentActivity.Title;
+            currentActivity.City = activityDTO.City ?? currentActivity.City;
+            currentActivity.Date = activityDTO.Date ?? currentActivity.Date;
+            currentActivity.Description = activityDTO.Description ?? currentActivity.Description;
+            currentActivity.Venue = activityDTO.Venue ?? currentActivity.Venue;
 
             var success = await _context.SaveChangesAsync() > 0;
 
             if (success) return ActivityToDTO(currentActivity);
-            else throw new Exception("problem saving activity");
+            { return new ActivityDTO { Message = "Error updating activity" }; }
         }
 
         public async Task<bool> DeleteActivity(Guid id)
@@ -78,7 +80,7 @@ namespace Application
             var success = await _context.SaveChangesAsync() > 0;
 
             if (success) return true;
-            else throw new Exception("error deleting record");
+            return false;
         }
 
         private bool _disposed;

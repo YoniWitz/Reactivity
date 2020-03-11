@@ -45,9 +45,9 @@ namespace Application
                 UserName = appUserRegistrationDTO.UserName
             };
 
-            var createdUser = await _userManager.CreateAsync(newUser, appUserRegistrationDTO.Password);
+            var newUserResult = await _userManager.CreateAsync(newUser, appUserRegistrationDTO.Password);
 
-            if (createdUser.Succeeded)
+            if (newUserResult.Succeeded)
             {
                 appUserDTO.DisplayName = newUser.DisplayName;
                 appUserDTO.Token = _jwtGenerator.CreateToken(newUser);
@@ -66,9 +66,9 @@ namespace Application
         {
             var appUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email);
 
-            var result = await _signInManager.CheckPasswordSignInAsync(appUser, appUserLoginDto.Password, false);
+            var appUserResult = await _signInManager.CheckPasswordSignInAsync(appUser, appUserLoginDto.Password, false);
 
-            if (result.Succeeded)
+            if (appUserResult.Succeeded)
             {
                 return new AppUserDTO
                 {

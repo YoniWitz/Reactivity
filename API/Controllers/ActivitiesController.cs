@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application;
 using Application.Interfaces;
 using Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -22,44 +20,53 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<ActivityDTO>> Get(Guid id)
         {
-            var activityDto = await _activitiesApp.GetActivityDTO(id);
-            return Ok(activityDto);
+            var activityDTO = await _activitiesApp.GetActivity(id);
+            if (activityDTO == null)
+            {
+                return NotFound();
+            }
+            return Ok(activityDTO);
         }
 
         // GET api/activities
         [HttpGet]
         public async Task<ActionResult<List<ActivityDTO>>> Get()
         {
-            var activitiesDtos = await _activitiesApp.GetActivitiesDTOs();
-            return Ok(activitiesDtos);
+            var activitiesDTOs = await _activitiesApp.GetActivities();
+            return Ok(activitiesDTOs);
 
         }
 
         //POST api/activities
         [HttpPost]
-        public async Task<ActionResult<ActivityDTO>> Post(ActivityDTO activityDto){
-            var createdActivityDto = await _activitiesApp.PostActivityDTO(activityDto);
-            return CreatedAtAction(nameof(Get), new { id = createdActivityDto.Id }, createdActivityDto);
+        public async Task<ActionResult<ActivityDTO>> Post(ActivityDTO activityDTO)
+        {
+            var createdActivityDTO = await _activitiesApp.PostActivity(activityDTO);
+            if (createdActivityDTO == null)
+                return NotFound();
+            return CreatedAtAction(nameof(Get), new { id = createdActivityDTO.Id }, createdActivityDTO);
         }
 
         //PUT api/activities/1
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, ActivityDTO activityDto){
-            activityDto.Id = id;
-            var updatedActivityDto = await _activitiesApp.PutActivityDTO(activityDto);
-            if(updatedActivityDto == null)
-                return NotFound();
+        public async Task<ActionResult> Put(Guid id, ActivityDTO activityDTO)
+        {
+            activityDTO.Id = id;
+            var updatedActivityDTO = await _activitiesApp.PutActivity(activityDTO);
+            if (updatedActivityDTO.Message != null)
+                return BadRequest(updatedActivityDTO.Message);
 
-            return Ok(updatedActivityDto);
+            return Ok(updatedActivityDTO);
         }
 
         //Delete api/activities
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id){
+        public async Task<ActionResult> Delete(Guid id)
+        {
             var deleteSuccess = await _activitiesApp.DeleteActivity(id);
-            
-            if(!deleteSuccess)
-                return NotFound();
+
+            if (!deleteSuccess)
+                return BadRequest("Error deleting activity");
 
             return Ok();
         }
