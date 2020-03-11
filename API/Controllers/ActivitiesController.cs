@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application;
 using Application.Interfaces;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -19,6 +20,7 @@ namespace API.Controllers
 
         // GET api/activities/5
         [HttpGet("{id}", Name = "Get")]
+        [Authorize]
         public async Task<ActionResult<ActivityDTO>> Get(Guid id)
         {
             var activityDto = await _activitiesApp.GetActivityDTO(id);
