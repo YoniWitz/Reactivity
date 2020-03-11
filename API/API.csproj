@@ -1,13 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj"/>
-    <ProjectReference Include="..\Infrastucture\Infrastucture.csproj"/>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastucture\Infrastucture.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UserSecretsId>5ccb3ec1-1c8b-46a5-a724-eda50d9bc3af</UserSecretsId>
   </PropertyGroup>
 </Project>
