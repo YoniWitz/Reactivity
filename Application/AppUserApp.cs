@@ -26,14 +26,18 @@ namespace Application
 
         public async Task<AppUserDTO> Register(AppUserRegistrationDTO appUserRegistrationDTO)
         {
-            if (await _context.Users.Where(x =>
-            (x.Email == appUserRegistrationDTO.Email) ||
-            (x.UserName == appUserRegistrationDTO.UserName))
-            .AnyAsync())
-            {
-                return null;
-            }
+            var appUserDTO = new AppUserDTO();
 
+            if (await _context.Users.Where(x => x.Email == appUserRegistrationDTO.Email).AnyAsync())
+            {
+                appUserDTO.ErrorMessage = "Email already in system";
+                return appUserDTO;
+            }
+            if (await _context.Users.Where(x => x.UserName == appUserRegistrationDTO.UserName).AnyAsync())
+            {
+                appUserDTO.ErrorMessage = "User name already in system";
+                return appUserDTO;
+            }
             var newUser = new AppUser
             {
                 DisplayName = appUserRegistrationDTO.UserName,
@@ -45,23 +49,24 @@ namespace Application
 
             if (createdUser.Succeeded)
             {
-                return new AppUserDTO
-                {
-                    DisplayName = newUser.DisplayName,
-                    Token = _jwtGenerator.CreateToken(newUser),
-                    UserName = newUser.UserName,
-                    Image = null
-                };
+                appUserDTO.DisplayName = newUser.DisplayName;
+                appUserDTO.Token = _jwtGenerator.CreateToken(newUser);
+                appUserDTO.UserName = newUser.UserName;
+                appUserDTO.Image = null;
             }
 
-            return null;
+            else
+            {
+                appUserDTO.ErrorMessage = "Error registering new user";
+            }
+            return appUserDTO;
         }
 
-        public async Task<AppUserDTO> Login(AppUserDTO appUserDto)
+        public async Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto)
         {
-            var appUser = await _userManager.FindByEmailAsync(appUserDto.Email);
+            var appUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email);
 
-            var result = await _signInManager.CheckPasswordSignInAsync(appUser, appUserDto.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(appUser, appUserLoginDto.Password, false);
 
             if (result.Succeeded)
             {
@@ -79,7 +84,7 @@ namespace Application
         private static AppUserDTO AppUserToDTO(AppUser appUser) =>
              new AppUserDTO
              {
-                 Email = appUser.Email
+                //  Email = appUser.Email
              };
 
         private bool _disposed;
