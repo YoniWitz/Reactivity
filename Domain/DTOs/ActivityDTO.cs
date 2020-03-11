@@ -18,5 +18,6 @@ namespace Domain
         public string City { get; set; }
         [Required]
         public string Venue { get; set; }
+        public string Message { get; set; }
     }
 }

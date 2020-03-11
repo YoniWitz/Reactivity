@@ -7,13 +7,13 @@ namespace Application.Interfaces
 {
     public interface IActivitiesApp : IDisposable
     {
-        Task<List<ActivityDTO>> GetActivitiesDTOs();
+        Task<List<ActivityDTO>> GetActivities();
 
-        Task<ActivityDTO> GetActivityDTO(Guid id);
+        Task<ActivityDTO> GetActivity(Guid id);
 
-        Task<ActivityDTO> PostActivityDTO(ActivityDTO activityDto);
+        Task<ActivityDTO> PostActivity(ActivityDTO activityDTO);
 
-        Task<ActivityDTO> PutActivityDTO(ActivityDTO activityDto);
+        Task<ActivityDTO> PutActivity(ActivityDTO activityDTO);
 
         Task<bool> DeleteActivity(Guid id);
     }

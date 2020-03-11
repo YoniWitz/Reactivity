@@ -15,7 +15,7 @@ namespace API.Controllers
         {
             _appUserApp = appUserApp;
         }
-         //POST api/appusers
+         //POST api/appusers/login
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Login(AppUserLoginDTO appUserLoginDTO){
@@ -26,6 +26,7 @@ namespace API.Controllers
             }
             return loggedInUser;
         }
+        //POST api/appusers/register
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Register(AppUserRegistrationDTO appUserRegistrationDTO){
