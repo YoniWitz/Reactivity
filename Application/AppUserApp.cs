@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
@@ -24,28 +25,26 @@ namespace Application
             _jwtGenerator = jwtGenerator;
         }
 
-        public async Task<AppUserDTO> Register(AppUserRegistrationDTO appUserRegistrationDTO)
+        public async Task<AppUserDTO> Register(AppUserRegisterDTO appUserRegisterDTO)
         {
             var appUserDTO = new AppUserDTO();
 
-            if (await _context.Users.Where(x => x.Email == appUserRegistrationDTO.Email).AnyAsync())
+            if (await _context.Users.Where(x => x.Email == appUserRegisterDTO.Email).AnyAsync())
             {
-                appUserDTO.ErrorMessage = "Email already in system";
-                return appUserDTO;
+                appUserDTO.Message.Add("Email already in system");
             }
-            if (await _context.Users.Where(x => x.UserName == appUserRegistrationDTO.UserName).AnyAsync())
-            {
-                appUserDTO.ErrorMessage = "User name already in system";
-                return appUserDTO;
-            }
+            // if (await _context.Users.Where(x => x.UserName == appUserRegisterDTO.UserName).AnyAsync())
+            // {
+            //     appUserDTO.Message.Add("User name already in system");
+            // }
             var newUser = new AppUser
             {
-                DisplayName = appUserRegistrationDTO.UserName,
-                Email = appUserRegistrationDTO.Email,
-                UserName = appUserRegistrationDTO.UserName
+                DisplayName = appUserRegisterDTO.UserName,
+                Email = appUserRegisterDTO.Email,
+                UserName = appUserRegisterDTO.UserName
             };
 
-            var newUserResult = await _userManager.CreateAsync(newUser, appUserRegistrationDTO.Password);
+            var newUserResult = await _userManager.CreateAsync(newUser, appUserRegisterDTO.Password);
 
             if (newUserResult.Succeeded)
             {
@@ -54,10 +53,10 @@ namespace Application
                 appUserDTO.UserName = newUser.UserName;
                 appUserDTO.Image = null;
             }
-
             else
             {
-                appUserDTO.ErrorMessage = "Error registering new user";
+                 foreach(var Error in newUserResult.Errors)
+                     appUserDTO.Message.Add(Error.Description);
             }
             return appUserDTO;
         }

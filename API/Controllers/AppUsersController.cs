@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Application;
 using Application.Interfaces;
 using Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -29,11 +28,11 @@ namespace API.Controllers
         //POST api/appusers/register
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<AppUserDTO>> Register(AppUserRegistrationDTO appUserRegistrationDTO){
-            var registeredUserDTO = await _appUserApp.Register(appUserRegistrationDTO);
-            if(registeredUserDTO.ErrorMessage != null)
+        public async Task<ActionResult<AppUserDTO>> Register(AppUserRegisterDTO appUserRegisterDTO){
+            var registeredUserDTO = await _appUserApp.Register(appUserRegisterDTO);
+            if(registeredUserDTO.Message.Count > 0)
             {
-                 return BadRequest(registeredUserDTO.ErrorMessage);
+                 return BadRequest(registeredUserDTO.Message);
             }
               return Created("", registeredUserDTO);
         }

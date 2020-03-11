@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.DTOs
 {
-    public class AppUserRegistrationDTO
+    public class AppUserRegisterDTO
     {
         [Required]
         public string DisplayName { get; set; }
