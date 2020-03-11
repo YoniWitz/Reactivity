@@ -18,13 +18,23 @@ namespace API.Controllers
          //POST api/appusers
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<AppUserDTO>> Login(AppUserDTO appUserDTO){
-            var loggedInUser = await _appUserApp.Login(appUserDTO);
+        public async Task<ActionResult<AppUserDTO>> Login(AppUserLoginDTO appUserLoginDTO){
+            var loggedInUser = await _appUserApp.Login(appUserLoginDTO);
             if(loggedInUser == null)
             {
                 return NotFound();
             }
             return loggedInUser;
+        }
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<ActionResult<AppUserDTO>> Register(AppUserRegistrationDTO appUserRegistrationDTO){
+            var registeredUserDTO = await _appUserApp.Register(appUserRegistrationDTO);
+            if(registeredUserDTO.ErrorMessage != null)
+            {
+                 return BadRequest(registeredUserDTO.ErrorMessage);
+            }
+              return Created("", registeredUserDTO);
         }
     }
 }

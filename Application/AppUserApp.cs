@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Domain.DTOs;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application
 {
@@ -12,18 +15,58 @@ namespace Application
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtGenerator _jwtGenerator;
-        public AppUserApp(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+        private readonly DataContext _context;
+        public AppUserApp(DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtGenerator = jwtGenerator;
         }
 
-        public async Task<AppUserDTO> Login(AppUserDTO appUserDto)
+        public async Task<AppUserDTO> Register(AppUserRegistrationDTO appUserRegistrationDTO)
         {
-            var appUser = await _userManager.FindByEmailAsync(appUserDto.Email);
+            var appUserDTO = new AppUserDTO();
 
-            var result = await _signInManager.CheckPasswordSignInAsync(appUser, appUserDto.Password, false);
+            if (await _context.Users.Where(x => x.Email == appUserRegistrationDTO.Email).AnyAsync())
+            {
+                appUserDTO.ErrorMessage = "Email already in system";
+                return appUserDTO;
+            }
+            if (await _context.Users.Where(x => x.UserName == appUserRegistrationDTO.UserName).AnyAsync())
+            {
+                appUserDTO.ErrorMessage = "User name already in system";
+                return appUserDTO;
+            }
+            var newUser = new AppUser
+            {
+                DisplayName = appUserRegistrationDTO.UserName,
+                Email = appUserRegistrationDTO.Email,
+                UserName = appUserRegistrationDTO.UserName
+            };
+
+            var createdUser = await _userManager.CreateAsync(newUser, appUserRegistrationDTO.Password);
+
+            if (createdUser.Succeeded)
+            {
+                appUserDTO.DisplayName = newUser.DisplayName;
+                appUserDTO.Token = _jwtGenerator.CreateToken(newUser);
+                appUserDTO.UserName = newUser.UserName;
+                appUserDTO.Image = null;
+            }
+
+            else
+            {
+                appUserDTO.ErrorMessage = "Error registering new user";
+            }
+            return appUserDTO;
+        }
+
+        public async Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto)
+        {
+            var appUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email);
+
+            var result = await _signInManager.CheckPasswordSignInAsync(appUser, appUserLoginDto.Password, false);
 
             if (result.Succeeded)
             {
@@ -41,7 +84,7 @@ namespace Application
         private static AppUserDTO AppUserToDTO(AppUser appUser) =>
              new AppUserDTO
              {
-                 Email = appUser.Email
+                //  Email = appUser.Email
              };
 
         private bool _disposed;
@@ -63,5 +106,7 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
     }
 }
