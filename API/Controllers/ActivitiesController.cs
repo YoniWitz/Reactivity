@@ -20,7 +20,6 @@ namespace API.Controllers
 
         // GET api/activities/5
         [HttpGet("{id}", Name = "Get")]
-        [Authorize]
         public async Task<ActionResult<ActivityDTO>> Get(Guid id)
         {
             var activityDto = await _activitiesApp.GetActivityDTO(id);
