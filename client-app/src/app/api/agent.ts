@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { IActivity } from '../models/acitivity';
-import { IUser, ILoginUser, IRegisterUser } from '../models/user';
+import { IActivity } from '../models/IAcitivity';
+import { IUser, ILoginUser, IRegisterUser } from '../models/IUser';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -24,8 +24,12 @@ const Activities = {
 }
 
 const usersUrl = '/users';
-const users = {
+const Users = {
     login: (loginUser: ILoginUser): Promise<IUser> => requests.post(`${usersUrl}/login`, loginUser),
     register: (registerUser: IRegisterUser): Promise<IUser> => requests.post(`${usersUrl}/register`, registerUser)
 }
-export default { Activities };
+
+export default{
+    Activities,
+    Users
+}

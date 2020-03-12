@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/acitivity";
+import { IActivity } from "../../../app/models/IAcitivity";
 import { v4 as uuid } from 'uuid';
 
 interface IProps {

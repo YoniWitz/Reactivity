@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Container } from "semantic-ui-react";
-import { IActivity } from "./../models/acitivity";
+import { IActivity } from "../models/IAcitivity";
 import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
@@ -25,41 +25,41 @@ const App = () => {
   }, []);
 
   const handleCreateSubmit = (newActivity: IActivity) => {
-    return new Promise(function(resolve, reject) {
-    agent.Activities.create(newActivity)
-      .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
-      .then(() => resolve())
-      .catch(err => console.log(err));
+    return new Promise(function (resolve, reject) {
+      agent.Activities.create(newActivity)
+        .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
+        .then(() => resolve())
+        .catch(err => console.log(err));
     })
   }
 
   const handleEditSubmit = (editedActivity: IActivity) => {
-    return new Promise(function(resolve, reject) {
-    agent.Activities.update(editedActivity.id, editedActivity)
-      .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
-      .then(() => resolve())
-      .catch(err => console.log(err));
+    return new Promise(function (resolve, reject) {
+      agent.Activities.update(editedActivity.id, editedActivity)
+        .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
+        .then(() => resolve())
+        .catch(err => console.log(err));
     })
   }
 
   const handleDeleteActivity = (id: string) => {
-    return new Promise(function(resolve, reject) {
-    agent.Activities.delete(id)
-      .then(() => setActivities(activities.filter(activity => activity.id !== id)))
-      .then(() => resolve())
-      .catch(err => console.log(err));
+    return new Promise(function (resolve, reject) {
+      agent.Activities.delete(id)
+        .then(() => setActivities(activities.filter(activity => activity.id !== id)))
+        .then(() => resolve())
+        .catch(err => console.log(err));
     })
   }
 
-  if(loading) return (<Loading content="Loading Activities..."/>)
-  return ( 
+  if (loading) return (<Loading content="Loading Activities..." />)
+  return (
     <Fragment>
       <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
-        <Route exact path='/' component={HomePage}/>
-        <Route path='/activities' 
-        render={(props) => <ActivityDashboard {...props}  handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
-         />        
+        <Route exact path='/' component={HomePage} />
+        <Route path='/activities'
+          render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
+        />
       </Container>
     </Fragment>
   );

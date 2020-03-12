@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/acitivity";
+import { IActivity } from "../../../app/models/IAcitivity";
 
 interface IProps {
   activities: IActivity[];
