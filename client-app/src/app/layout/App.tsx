@@ -30,7 +30,7 @@ const App = () => {
       agent.Activities.create(newActivity)
         .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
         .then(() => resolve())
-        .catch(() => reject());
+        .catch((err) => reject(err));
     })
   }
 
@@ -39,7 +39,7 @@ const App = () => {
       agent.Activities.update(editedActivity.id, editedActivity)
         .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
         .then(() => resolve())
-        .catch(() => reject());
+        .catch((err) => reject(err));
     })
   }
 
@@ -48,7 +48,7 @@ const App = () => {
       agent.Activities.delete(id)
         .then(() => setActivities(activities.filter(activity => activity.id !== id)))
         .then(() => resolve())
-        .catch(() => reject());
+        .catch((err) => reject(err));
     })
   }
 
