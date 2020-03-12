@@ -13,9 +13,9 @@ export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActi
   const handleDeleteButton = (id: string) => {
     setTarget(id);
     handleDeleteActivity(id)
-      .then(() => {
-        handleSelectedActivity('');
-      });
+      .then(() => handleSelectedActivity(''))
+      .catch(() => console.log("error deleting activity")
+      );
   }
 
   return (

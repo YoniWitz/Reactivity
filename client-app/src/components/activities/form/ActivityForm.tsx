@@ -44,8 +44,9 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
       .then(() => {
         onCancelForm(false);
         setSelectedActivity(activity);
-        setLoading(false);
-      });
+      })
+      .catch(() => console.log("error creating activity"))
+      .finally(() => setLoading(false));
   }
 
   return (

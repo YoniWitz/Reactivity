@@ -20,8 +20,9 @@ const App = () => {
         returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
         setActivities(returnedActivityList);
       })
-      .then(() => setLoading(false))
-      .catch(err => console.log(err, "error fetching activities data"));
+     
+      .catch(err => console.log(err, "error fetching activities data"))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleCreateSubmit = (newActivity: IActivity) => {
@@ -29,7 +30,7 @@ const App = () => {
       agent.Activities.create(newActivity)
         .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
         .then(() => resolve())
-        .catch(err => console.log(err));
+        .catch(() => reject());
     })
   }
 
@@ -38,7 +39,7 @@ const App = () => {
       agent.Activities.update(editedActivity.id, editedActivity)
         .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
         .then(() => resolve())
-        .catch(err => console.log(err));
+        .catch(() => reject());
     })
   }
 
@@ -47,7 +48,7 @@ const App = () => {
       agent.Activities.delete(id)
         .then(() => setActivities(activities.filter(activity => activity.id !== id)))
         .then(() => resolve())
-        .catch(err => console.log(err));
+        .catch(() => reject());
     })
   }
 
