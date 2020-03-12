@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/acitivity";
+import { IActivity } from "../../../app/models/IAcitivity";
 
 interface IProps {
   activities: IActivity[];
@@ -13,9 +13,9 @@ export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActi
   const handleDeleteButton = (id: string) => {
     setTarget(id);
     handleDeleteActivity(id)
-      .then(() => {
-        handleSelectedActivity('');
-      });
+      .then(() => handleSelectedActivity(''))
+      .catch(() => console.log("error deleting activity")
+      );
   }
 
   return (

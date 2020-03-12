@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, Container, Button, Modal } from "semantic-ui-react";
 import { ActivityForm } from "./activities/form/ActivityForm";
-import { IActivity } from "../app/models/acitivity";
+import { IActivity } from "../app/models/IAcitivity";
 import { NavLink } from "react-router-dom";
 
 interface IProps {

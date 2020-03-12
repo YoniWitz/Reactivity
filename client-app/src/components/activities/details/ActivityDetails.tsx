@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Image, Button } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/acitivity";
+import { IActivity } from "../../../app/models/IAcitivity";
 
 interface IProps {
   selectedActivity: IActivity;

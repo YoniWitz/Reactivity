@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { IActivity } from '../models/acitivity';
+import { IActivity } from '../models/IAcitivity';
+import { IUser, ILoginUser, IRegisterUser } from '../models/IUser';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -12,7 +13,7 @@ const requests = {
     delete: (url: string) => axios.delete(url).then(responseBody)
 }
 
-const activitiesUrl = '/activities'
+const activitiesUrl = '/activities';
 
 const Activities = {
     list: (): Promise<IActivity[]> => requests.get(activitiesUrl),
@@ -22,4 +23,13 @@ const Activities = {
     delete: (id: string) => axios.delete(`${activitiesUrl}/${id}`)
 }
 
-export default { Activities };
+const usersUrl = '/users';
+const Users = {
+    login: (loginUser: ILoginUser): Promise<IUser> => requests.post(`${usersUrl}/login`, loginUser),
+    register: (registerUser: IRegisterUser): Promise<IUser> => requests.post(`${usersUrl}/register`, registerUser)
+}
+
+export default{
+    Activities,
+    Users
+}

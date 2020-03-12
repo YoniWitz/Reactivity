@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/acitivity";
+import { IActivity } from "../../../app/models/IAcitivity";
 import { AcitivityList } from "./AcitivityList";
 import { ActivityDetails } from "../details/ActivityDetails";
 import { ActivityForm } from "../form/ActivityForm";
