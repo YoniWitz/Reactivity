@@ -23,7 +23,7 @@ const Activities = {
     delete: (id: string) => axios.delete(`${activitiesUrl}/${id}`)
 }
 
-const usersUrl = '/users';
+const usersUrl = '/appusers';
 const Users = {
     login: (loginUser: ILoginUser): Promise<IUser> => requests.post(`${usersUrl}/login`, loginUser),
     register: (registerUser: IRegisterUser): Promise<IUser> => requests.post(`${usersUrl}/register`, registerUser)
