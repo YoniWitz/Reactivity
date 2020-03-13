@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { ILoginUser } from '../../../app/models/IUser'
+import agent from '../../../app/api/agent'
 
 export const LoginForm = () => {
     let [loginUser, setLoginUser] = useState<ILoginUser>({email:'', password:''})
@@ -11,7 +12,9 @@ export const LoginForm = () => {
     }
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
-        console.log(loginUser);
+        agent.Users.login(loginUser)
+        .then(response => console.log(response))
+        .catch(err => console.log(err));
     }
     return (
         <Form onSubmit={handleSubmit}>
