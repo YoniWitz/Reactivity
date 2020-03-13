@@ -5,8 +5,9 @@ import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
 import { Loading } from "./Loading";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { HomePage } from "../../components/home/HomePage";
+import { LoginForm } from "../../components/users/form/LoginForm";
 
 const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
@@ -20,7 +21,7 @@ const App = () => {
         returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
         setActivities(returnedActivityList);
       })
-     
+
       .catch(err => console.log(err, "error fetching activities data"))
       .finally(() => setLoading(false));
   }, []);
@@ -57,10 +58,13 @@ const App = () => {
     <Fragment>
       <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
+        <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/activities'
           render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
         />
+        <Route path='/login' component={LoginForm} />
+        </Switch>
       </Container>
     </Fragment>
   );
