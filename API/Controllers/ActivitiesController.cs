@@ -34,7 +34,6 @@ namespace API.Controllers
         {
             var activitiesDTOs = await _activitiesApp.GetActivities();
             return Ok(activitiesDTOs);
-
         }
 
         //POST api/activities

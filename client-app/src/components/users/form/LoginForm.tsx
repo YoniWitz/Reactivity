@@ -1,27 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { ILoginUser } from '../../../app/models/IUser'
 import agent from '../../../app/api/agent'
 
 export const LoginForm = () => {
-    let [loginUser, setLoginUser] = useState<ILoginUser>({email:'', password:''})
-    
-    const handleChange= (e: React.ChangeEvent<HTMLInputElement>) =>{
-        let {name, value} = e.target;
-        setLoginUser({...loginUser, [name]: value})
+    let [loginUser, setLoginUser] = useState<ILoginUser>({ email: '', password: '' })
+    let [loading, setLoading] = useState<boolean>(false);
+    let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
+
+    useEffect(() => {      
+        let isEmailInvalid = loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? false: true;
+            setSubmitDisabled(loginUser.password.length < 6 || isEmailInvalid);      
+      }, [loginUser]);
+   
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let { name, value } = e.target;
+        setLoginUser({ ...loginUser, [name]: value })
     }
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) =>{
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setLoading(true);
         agent.Users.login(loginUser)
-        .then(response => console.log(response))
-        .catch(err => console.log(err));
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .finally(() => setLoading(false));
     }
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} loading={loading}>
             <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={loginUser.email} name="email" />
-            <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={loginUser.password}/>
+            <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={loginUser.password} />
             <Button.Group widths="2">
-                <Button floated='right' positive type="submit" content="Login" />
+                <Button floated='right' positive type="submit" content="Login" disabled={submitDisabled}/>
                 <Button floated='left' type="button" content="Clear Form" />
             </Button.Group>
         </Form>
