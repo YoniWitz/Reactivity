@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Menu, Container, Button, Modal } from "semantic-ui-react";
+import { Menu, Container, Button, Modal, Image } from "semantic-ui-react";
 import { ActivityForm } from "./activities/form/ActivityForm";
 import { IActivity } from "../app/models/IAcitivity";
 import { NavLink } from "react-router-dom";
+import { IUser } from "../app/models/IUser";
 
 interface IProps {
+  user: IUser;
   handleCreateSubmit: (activity: IActivity) => Promise<unknown>;
   setSelectedActivity: ((activity: IActivity) => void);
 }
-export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity }) => {
+export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity, user }) => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
     <Menu fixed='top' inverted>
+      {console.log(user)}
       <Container>
         <Menu.Item header as={NavLink} to='/' exact>
           <img
@@ -27,7 +30,10 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           <Modal.Header>Create New Activity</Modal.Header>
           <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
+        <Menu.Item position='right'>
+          <Image avatar spaced='right' src={user.image || '/assets/user.png'} />{user.displayName || 'Hello Guest'}</Menu.Item>
+        {user.token && <Menu.Item >Logout</Menu.Item>}
       </Container>
-    </Menu>
+    </Menu >
   );
 };

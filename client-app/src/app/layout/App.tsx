@@ -8,8 +8,10 @@ import { Loading } from "./Loading";
 import { Route, Switch } from "react-router-dom";
 import { HomePage } from "../../components/home/HomePage";
 import { LoginForm } from "../../components/users/form/LoginForm";
+import { IUser } from "../models/IUser";
 
 const App = () => {
+  let [user, setUser] = useState<IUser>({ displayName: "", userName: "", token: "" });
   let [activities, setActivities] = useState<IActivity[]>([]);
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   let [loading, setLoading] = useState<boolean>(true);
@@ -56,14 +58,16 @@ const App = () => {
   if (loading) return (<Loading content="Loading Activities..." />)
   return (
     <Fragment>
-      <Navbar setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
+      <Navbar user={user} setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
         <Switch>
-        <Route exact path='/' component={HomePage} />
+        <Route exact path='/'
+         render={(props) => <HomePage {...props} user={user}/>}/>
         <Route path='/activities'
           render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
         />
-        <Route path='/login' component={LoginForm} />
+        <Route path='/login' 
+        render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
         </Switch>
       </Container>
     </Fragment>
