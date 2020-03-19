@@ -10,6 +10,7 @@ import { HomePage } from "../../components/home/HomePage";
 import { LoginForm } from "../../components/users/form/LoginForm";
 import { IUser } from "../models/IUser";
 import NotFound from "./NotFound";
+import {ToastContainer} from 'react-toastify';
 
 const App = () => {
   let [user, setUser] = useState<IUser | null>(null);
@@ -32,7 +33,7 @@ const App = () => {
         returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
         setActivities(returnedActivityList);
       })
-      .catch(err => console.log(err, "error fetching activities data"))
+      //.catch(err => console.log(err, "error fetching activities data"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -66,6 +67,7 @@ const App = () => {
   if (loading) return (<Loading content="Loading Activities..." />)
   return (
     <Fragment>
+      <ToastContainer position="bottom-right" />>
       <Navbar setUser={setUser} user={user} setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
         <Switch>

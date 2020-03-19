@@ -1,11 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from '../models/IAcitivity';
 import { IUser, ILoginUser, IRegisterUser } from '../models/IUser';
+import { history } from '../../index';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
-axios.interceptors.response.use(undefined, error =>{
-    console.log(error);
+axios.interceptors.response.use(undefined, (error) => {
+    const { status, config, data } = error.response;
+    if ([404].includes(status)) {
+        history.push('/notfound');
+    }
+    else if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
+        history.push('/notfound');
+    }
+    else if (status === 500) {
+        toast.error('Server error - check terminal for more ingo')
+    }
+    
 })
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -33,7 +45,7 @@ const Users = {
     register: (registerUser: IRegisterUser): Promise<IUser> => requests.post(`${usersUrl}/register`, registerUser)
 }
 
-export default{
+export default {
     Activities,
     Users
 }
