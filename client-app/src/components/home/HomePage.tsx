@@ -3,10 +3,10 @@ import { Container, Segment, Header, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { IUser } from '../../app/models/IUser'
 
-interface IProps{
+interface IProps {
     user: IUser
 }
-export const HomePage: React.FC<IProps> = ({user}) => {
+export const HomePage: React.FC<IProps> = ({ user }) => {
 
     return (
         <Segment inverted textAlign='center' vertical>
@@ -21,21 +21,21 @@ export const HomePage: React.FC<IProps> = ({user}) => {
                     Reactivities
                 </Header>
 
-                <Header as='h2' inverted content={user ? 'Welcome to Reactivities' : 'Welcome Back'} />
+                <Header as='h2' inverted content={user.token ? 'Welcome Back': 'Welcome to Reactivities'} />
                 {
-                    user.token ? 
-                    (<Button as={Link} to='/activities' size='huge' inverted>
+                    user.token ?
+                        (<Button as={Link} to='/activities' size='huge' inverted>
                             Go To Activities!
-                    </Button>)
-                    :
-                    (<Fragment>
-                        <Button as={Link} to='/login' size='huge' inverted>
-                            Login
-                        </Button>
-                        <Button as={Link} to='/login' size='huge' inverted>
-                            Register
-                        </Button>
-                    </Fragment>)
+                        </Button>)
+                        :
+                        (<Fragment>
+                            <Button as={Link} to='/login' size='huge' inverted>
+                                Login
+                            </Button>
+                            <Button as={Link} to='/login' size='huge' inverted>
+                                Register
+                            </Button>
+                        </Fragment>)
                 }
             </Container>
         </Segment>

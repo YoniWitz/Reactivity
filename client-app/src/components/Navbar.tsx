@@ -15,7 +15,6 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
 
   return (
     <Menu fixed='top' inverted>
-      {console.log(user)}
       <Container>
         <Menu.Item header as={NavLink} to='/' exact>
           <img
@@ -31,7 +30,7 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
         <Menu.Item position='right'>
-          <Image avatar spaced='right' src={user.image || '/assets/user.png'} />{user.displayName || 'Hello Guest'}</Menu.Item>
+          <Image avatar spaced='right' src={user.image || '/assets/user.png'} />Hello {user.displayName || 'Guest'}</Menu.Item>
         {user.token && <Menu.Item >Logout</Menu.Item>}
       </Container>
     </Menu >
