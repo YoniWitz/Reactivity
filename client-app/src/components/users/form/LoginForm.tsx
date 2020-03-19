@@ -25,6 +25,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
         let { name, value } = e.target;
         setLoginUser({ ...loginUser, [name]: value })
     }
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
@@ -36,6 +37,13 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
+
+    const clearForm = () => {
+        setLoginUser({
+           email: '',
+            password: ''
+        })
+    }
     return (
         <Form onSubmit={handleSubmit} loading={loading}>
             <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={loginUser.email} name="email" />
@@ -44,7 +52,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
             {(loginUser.password.length < 6) ? <Message color='red'>Password must contain  6 characters at least</Message> : null}
             <Button.Group widths="2">
                 <Button floated='right' positive type="submit" content="Login" disabled={submitDisabled} />
-                <Button floated='left' type="button" content="Clear Form" />
+                <Button floated='left' type="button" content="Clear Form" onClick={clearForm} />
             </Button.Group>
         </Form>
     )
