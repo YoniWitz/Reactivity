@@ -20,7 +20,7 @@ const App = () => {
  
   //called immediately after the component is mounted
   useEffect(() => {
-    let tempUser:IUser = JSON.parse(localStorage.getItem('user')!);
+    let tempUser:IUser = JSON.parse(window.localStorage.getItem('user')!);
     if(tempUser)
     setUser({
       displayName : tempUser.displayName,

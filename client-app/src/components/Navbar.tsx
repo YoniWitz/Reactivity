@@ -4,7 +4,7 @@ import { ActivityForm } from "./activities/form/ActivityForm";
 import { IActivity } from "../app/models/IAcitivity";
 import { NavLink } from "react-router-dom";
 import { IUser } from "../app/models/IUser";
-import { useHistory } from 'react-router-dom'
+import { history } from '../index';
 
 interface IProps {
   user: IUser | null;
@@ -14,7 +14,6 @@ interface IProps {
 }
 export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity, user, setUser }) => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
-  let history = useHistory();
 
   const logout = () => {
     localStorage.removeItem('user');

@@ -6,6 +6,15 @@ import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
+axios.interceptors.request.use(config => {
+    const tempUser: IUser = JSON.parse(window.localStorage.getItem('user')!);
+    if (tempUser) {
+        const token = tempUser.token;
+        config.headers.Authorization = `Bearer ${token}`;    
+    }
+    return config;
+}, error => Promise.reject(error))
+
 axios.interceptors.response.use(undefined, (error) => {
     const { status, config, data } = error.response;
     if ([404].includes(status)) {
@@ -17,7 +26,10 @@ axios.interceptors.response.use(undefined, (error) => {
     else if (status === 500) {
         toast.error('Server error - check terminal for more ingo')
     }
-    
+    else if (status === 401) {
+        history.push('/login');
+        toast.error('Please Login First');
+    }
 })
 
 const responseBody = (response: AxiosResponse) => response.data;
