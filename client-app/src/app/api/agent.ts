@@ -4,6 +4,10 @@ import { IUser, ILoginUser, IRegisterUser } from '../models/IUser';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
+axios.interceptors.response.use(undefined, error =>{
+    console.log(error);
+})
+
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {

@@ -9,6 +9,7 @@ import { Route, Switch } from "react-router-dom";
 import { HomePage } from "../../components/home/HomePage";
 import { LoginForm } from "../../components/users/form/LoginForm";
 import { IUser } from "../models/IUser";
+import NotFound from "./NotFound";
 
 const App = () => {
   let [user, setUser] = useState<IUser | null>(null);
@@ -75,6 +76,7 @@ const App = () => {
           />
           <Route path='/login' 
           render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
+          <Route component={NotFound}/>
         </Switch>
       </Container>
     </Fragment>
