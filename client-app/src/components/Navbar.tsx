@@ -4,15 +4,24 @@ import { ActivityForm } from "./activities/form/ActivityForm";
 import { IActivity } from "../app/models/IAcitivity";
 import { NavLink } from "react-router-dom";
 import { IUser } from "../app/models/IUser";
+import { useHistory } from 'react-router-dom'
 
 interface IProps {
-  user: IUser;
+  user: IUser | null;
+  setUser: (IUser: null) => void;
   handleCreateSubmit: (activity: IActivity) => Promise<unknown>;
   setSelectedActivity: ((activity: IActivity) => void);
 }
-export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity, user }) => {
+export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivity, user, setUser }) => {
   let [modalOpen, setModalOpen] = useState<boolean>(false);
+  let history = useHistory();
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    history.push('/');
+  }
+  
   return (
     <Menu fixed='top' inverted>
       <Container>
@@ -30,8 +39,8 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
         </Modal>
         <Menu.Item position='right'>
-          <Image avatar spaced='right' src={user.image || '/assets/user.png'} />Hello {user.displayName || 'Guest'}</Menu.Item>
-        {user.token && <Menu.Item >Logout</Menu.Item>}
+          <Image avatar spaced='right' src={user ? user.image || '/assets/user.png' : '/assets/user.png'} />Hello {user ? user.displayName : 'Guest'}</Menu.Item>
+        {user && <Menu.Item as={Button} onClick={logout}>Logout</Menu.Item>}
       </Container>
     </Menu >
   );
