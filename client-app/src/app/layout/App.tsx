@@ -11,19 +11,26 @@ import { LoginForm } from "../../components/users/form/LoginForm";
 import { IUser } from "../models/IUser";
 
 const App = () => {
-  let [user, setUser] = useState<IUser>({ displayName: "", userName: "", token: "" });
+  let [user, setUser] = useState<IUser | null>(null);
   let [activities, setActivities] = useState<IActivity[]>([]);
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   let [loading, setLoading] = useState<boolean>(true);
-
+ 
   //called immediately after the component is mounted
   useEffect(() => {
+    let tempUser:IUser = JSON.parse(localStorage.getItem('user')!);
+    if(tempUser)
+    setUser({
+      displayName : tempUser.displayName,
+      token : tempUser.token,
+      userName: tempUser.userName
+    })
+
     agent.Activities.list()
       .then(returnedActivityList => {
         returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
         setActivities(returnedActivityList);
       })
-
       .catch(err => console.log(err, "error fetching activities data"))
       .finally(() => setLoading(false));
   }, []);
@@ -58,16 +65,16 @@ const App = () => {
   if (loading) return (<Loading content="Loading Activities..." />)
   return (
     <Fragment>
-      <Navbar user={user} setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
+      <Navbar setUser={setUser} user={user} setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
         <Switch>
-        <Route exact path='/'
-         render={(props) => <HomePage {...props} user={user}/>}/>
-        <Route path='/activities'
-          render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
-        />
-        <Route path='/login' 
-        render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
+          <Route exact path='/'
+          render={(props) => <HomePage {...props} user={user}/>}/>
+          <Route path='/activities'
+            render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
+          />
+          <Route path='/login' 
+          render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
         </Switch>
       </Container>
     </Fragment>

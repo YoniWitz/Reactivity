@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { IUser } from '../../app/models/IUser'
 
 interface IProps {
-    user: IUser
+    user: IUser | null;
 }
 export const HomePage: React.FC<IProps> = ({ user }) => {
 
@@ -21,9 +21,9 @@ export const HomePage: React.FC<IProps> = ({ user }) => {
                     Reactivities
                 </Header>
 
-                <Header as='h2' inverted content={user.token ? 'Welcome Back': 'Welcome to Reactivities'} />
+                <Header as='h2' inverted content={user ? 'Welcome Back': 'Welcome to Reactivities'} />
                 {
-                    user.token ?
+                    user ?
                         (<Button as={Link} to='/activities' size='huge' inverted>
                             Go To Activities!
                         </Button>)

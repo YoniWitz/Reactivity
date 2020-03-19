@@ -32,6 +32,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
         agent.Users.login(loginUser)
             .then((response: IUser) => {
                 setUser(response);
+                localStorage.setItem('user', JSON.stringify(response));
                 setLoggedin(true);
             })
             .catch(err => console.log(err))
@@ -40,7 +41,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
 
     const clearForm = () => {
         setLoginUser({
-           email: '',
+            email: '',
             password: ''
         })
     }
