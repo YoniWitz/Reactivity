@@ -21,7 +21,7 @@ export const HomePage: React.FC<IProps> = ({ user }) => {
                     Reactivities
                 </Header>
 
-                <Header as='h2' inverted content={user ? 'Welcome Back': 'Welcome to Reactivities'} />
+                <Header as='h2' inverted content={user ? 'Welcome Back ' + user.displayName : 'Welcome to Reactivities'} />
                 {
                     user ?
                         (<Button as={Link} to='/activities' size='huge' inverted>
@@ -32,7 +32,7 @@ export const HomePage: React.FC<IProps> = ({ user }) => {
                             <Button as={Link} to='/login' size='huge' inverted>
                                 Login
                             </Button>
-                            <Button as={Link} to='/login' size='huge' inverted>
+                            <Button as={Link} to='/register' size='huge' inverted>
                                 Register
                             </Button>
                         </Fragment>)
