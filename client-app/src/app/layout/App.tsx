@@ -7,7 +7,8 @@ import agent from "../api/agent";
 import { Loading } from "./Loading";
 import { Route, Switch } from "react-router-dom";
 import { HomePage } from "../../components/home/HomePage";
-import { LoginForm } from "../../components/users/form/LoginForm";
+import { LoginForm } from "../../components/users/form/LoginForm"; 
+import { RegisterForm } from "../../components/users/form/RegisterForm";
 import { IUser } from "../models/IUser";
 import NotFound from "./NotFound";
 import {ToastContainer} from 'react-toastify';
@@ -78,6 +79,8 @@ const App = () => {
           />
           <Route path='/login' 
           render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
+          <Route path='/register' 
+          render={(props) => <RegisterForm  {...props} setUser={setUser}/>}/>
           <Route component={NotFound}/>
         </Switch>
       </Container>

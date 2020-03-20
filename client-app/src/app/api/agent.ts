@@ -12,25 +12,40 @@ axios.interceptors.request.use(config => {
     localStorageUser = JSON.parse(window.localStorage.getItem('user')!);
     if (localStorageUser) {
         const token = localStorageUser.token;
-        config.headers.Authorization = `Bearer ${token}`;    
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 }, error => Promise.reject(error))
 
 axios.interceptors.response.use(undefined, (error) => {
-    const { status, config, data } = error.response;
-    if (status === 404 && !localStorageUser) {
-        toast.error('Username and password not found');
+    if (error.message === 'Network Error' && !error.response) {
+        toast.error('Network error - make sure API is running!', { autoClose: false })
     }
-    else if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
-        history.push('/notfound');
-    }
-    else if (status === 500) {
-        toast.error('Server error - check terminal for more ingo')
-    }
-    else if (status === 401) {
-        history.push('/login');
-        toast.error('Please Login First');
+    else {
+        const { status, config, data, statusText } = error.response;
+
+        //login errors
+        if (status === 404 && !localStorageUser) {
+            toast.error('Username and password not found');
+        }
+        else if (status === 400) {
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                history.push('/notfound');
+            }
+            //registration errors
+            else if (statusText === 'Bad Request' && config.method === "post") {
+                data.map((error: string) => toast.error(error, { autoClose: false }))
+            }
+        }
+
+        else if (status === 500) {
+            toast.error('Server error - check terminal for more info')
+        }
+        //unauthorized errors
+        else if (status === 401) {
+            history.push('/');
+            toast.error('Please Login First');
+        }
     }
     throw error.response;
 })
