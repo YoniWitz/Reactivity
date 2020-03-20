@@ -51,9 +51,9 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
     setLoading(true);
     if (activity.id.length === 0) activity.id = uuid();
     handleSubmit(activity)
-      .then(() => {
+      .then((message) => {
         onCancelForm(false);
-        toast.success('Holding Created'); 
+        toast.success(`Activity ${message}`); 
         setSelectedActivity(activity);
       })
       .catch((err) => console.log(err))

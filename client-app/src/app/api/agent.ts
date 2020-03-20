@@ -18,6 +18,7 @@ axios.interceptors.request.use(config => {
 }, error => Promise.reject(error))
 
 axios.interceptors.response.use(undefined, (error) => {
+     console.log(error)
     if (error.message === 'Network Error' && !error.response) {
         toast.error('Network error - make sure API is running!', { autoClose: false })
     }
@@ -35,6 +36,10 @@ axios.interceptors.response.use(undefined, (error) => {
             //registration errors
             else if (statusText === 'Bad Request' && config.method === "post") {
                 data.map((error: string) => toast.error(error, { autoClose: false }))
+            }
+            //bad update request
+            else if (status === 400 && data === "Error updating activity"){
+                toast.error(data);
             }
         }
 
