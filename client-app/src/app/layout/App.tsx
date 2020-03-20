@@ -42,7 +42,7 @@ const App = () => {
     return new Promise(function (resolve, reject) {
       agent.Activities.create(newActivity)
         .then(returnedNewctivity => setActivities([...activities, returnedNewctivity]))
-        .then(() => resolve())
+        .then(() => resolve('created'))
         .catch((err) => reject(err));
     })
   }
@@ -51,7 +51,7 @@ const App = () => {
     return new Promise(function (resolve, reject) {
       agent.Activities.update(editedActivity.id, editedActivity)
         .then(returnedUpdatedActivity => setActivities([...activities.filter(activity => activity.id !== editedActivity.id), returnedUpdatedActivity]))
-        .then(() => resolve())
+        .then(() => resolve('updated'))
         .catch((err) => reject(err));
     })
   }
@@ -68,7 +68,7 @@ const App = () => {
   if (loading) return (<Loading content="Loading Activities..." />)
   return (
     <Fragment>
-      <ToastContainer position="bottom-right" />>
+      <ToastContainer position="bottom-right" />
       <Navbar setUser={setUser} user={user} setSelectedActivity={setSelectedActivity} handleCreateSubmit={handleCreateSubmit} />
       <Container style={{ marginTop: '7em' }}>
         <Switch>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IAcitivity";
+import { toast } from "react-toastify";
 
 interface IProps {
   activities: IActivity[];
@@ -13,7 +14,7 @@ export const AcitivityList: React.FC<IProps> = ({ activities, handleSelectedActi
   const handleDeleteButton = (id: string) => {
     setTarget(id);
     handleDeleteActivity(id)
-      .then(() => handleSelectedActivity(''))
+      .then(() => {handleSelectedActivity(''); toast.success('Activity deleted');})
       .catch((err) => console.log(err, "error deleting activity")
       );
   }
