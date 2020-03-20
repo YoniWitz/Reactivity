@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Menu, Container, Button, Modal, Image } from "semantic-ui-react";
 import { ActivityForm } from "./activities/form/ActivityForm";
 import { IActivity } from "../app/models/IAcitivity";
@@ -32,11 +32,15 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           />
           Reactivity
         </Menu.Item>
-        <Menu.Item name="Activities" as={NavLink} to='/activities' />
-        <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>} open={modalOpen}>
-          <Modal.Header>Create New Activity</Modal.Header>
-          <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
-        </Modal>
+        {user && 
+          <Fragment>
+          <Menu.Item name="Activities" as={NavLink} to='/activities' />
+          <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>} open={modalOpen}>
+            <Modal.Header>Create New Activity</Modal.Header>
+            <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
+          </Modal>
+          </Fragment>
+        }
         <Menu.Item position='right'>
           <Image avatar spaced='right' src={user ? user.image || '/assets/user.png' : '/assets/user.png'} />Hello {user ? user.displayName : 'Guest'}</Menu.Item>
         {user && <Menu.Item as={Button} onClick={logout}>Logout</Menu.Item>}

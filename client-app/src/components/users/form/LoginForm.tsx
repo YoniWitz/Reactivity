@@ -45,11 +45,11 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
         })
     }
     return (
-        <Form onSubmit={handleSubmit} loading={loading}>
+        <Form onSubmit={handleSubmit} loading={loading} error>
             <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={loginUser.email} name="email" />
-            {loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? null : <Message color='red'>Must enter valid email address </Message>}
+            {loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? null : <Message error>Must enter valid email address </Message>}
             <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={loginUser.password} />
-            {(loginUser.password.length < 6) ? <Message color='red'>Password must contain  6 characters at least</Message> : null}
+            {(loginUser.password.length < 6) ? <Message error>Password must contain  6 characters at least</Message> : null}
             <Button.Group widths="2">
                 <Button floated='right' positive type="submit" content="Login" disabled={submitDisabled} />
                 <Button floated='left' type="button" content="Clear Form" onClick={clearForm} />

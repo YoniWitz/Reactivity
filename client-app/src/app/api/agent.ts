@@ -6,10 +6,12 @@ import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
+let localStorageUser: IUser;
+
 axios.interceptors.request.use(config => {
-    const tempUser: IUser = JSON.parse(window.localStorage.getItem('user')!);
-    if (tempUser) {
-        const token = tempUser.token;
+    localStorageUser = JSON.parse(window.localStorage.getItem('user')!);
+    if (localStorageUser) {
+        const token = localStorageUser.token;
         config.headers.Authorization = `Bearer ${token}`;    
     }
     return config;
@@ -17,8 +19,8 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(undefined, (error) => {
     const { status, config, data } = error.response;
-    if ([404].includes(status)) {
-        history.push('/notfound');
+    if (status === 404 && !localStorageUser) {
+        toast.error('Username and password not found');
     }
     else if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
         history.push('/notfound');
@@ -30,6 +32,7 @@ axios.interceptors.response.use(undefined, (error) => {
         history.push('/login');
         toast.error('Please Login First');
     }
+    throw error.response;
 })
 
 const responseBody = (response: AxiosResponse) => response.data;
