@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Domain.DTOs;
 
 namespace Domain
 {
@@ -19,5 +21,7 @@ namespace Domain
         [Required]
         public string Venue { get; set; }
         public string Message { get; set; }
+        public ICollection<AttendeeDTO> Attendees{get;set;}
+
     }
 }
