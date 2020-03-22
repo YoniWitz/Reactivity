@@ -8,5 +8,6 @@ namespace Application.Interfaces
     {
            Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto);
            Task<AppUserDTO> Register(AppUserRegisterDTO appUserRegisterDTO);
+        string GetCurrentUsername();
     }
 }
