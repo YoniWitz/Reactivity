@@ -77,7 +77,7 @@ namespace Application
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (success) return ActivityToDTO(activity);
+            if (success) return _mapper.Map<Activity, ActivityDTO>(activity);
             else return null;
         }
 
@@ -96,7 +96,7 @@ namespace Application
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (success) return ActivityToDTO(currentActivity);
+            if (success) return _mapper.Map<Activity, ActivityDTO>(currentActivity);
             { return new ActivityDTO { Message = "Error updating activity" }; }
         }
 
@@ -132,16 +132,5 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        private static ActivityDTO ActivityToDTO(Activity activity) =>
-             new ActivityDTO
-             {
-                 Id = activity.Id,
-                 Category = activity.Category,
-                 City = activity.City,
-                 Date = activity.Date,
-                 Description = activity.Description,
-                 Title = activity.Title,
-                 Venue = activity.Venue
-             };
     }
 }
