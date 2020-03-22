@@ -13,7 +13,7 @@ namespace Application
     {
         private readonly DataContext _context;
         private readonly IAppUserApp _appUserApp;
-        
+
         public ActivitiesApp(DataContext context, IAppUserApp appUserApp)
         {
             _appUserApp = appUserApp;
@@ -22,14 +22,25 @@ namespace Application
 
         public async Task<ActivityDTO> GetActivity(Guid id)
         {
-            var activity = await _context.Activities.FindAsync(id);
+            var activity = await _context.Activities
+            .Include(x => x.UserActivities)
+            .ThenInclude(x => x.AppUser)
+            .SingleOrDefaultAsync(x => x.Id == id);
+
             if (activity == null) return null;
             return ActivityToDTO(activity);
         }
 
         public async Task<List<ActivityDTO>> GetActivities()
         {
-            var activitiesDTOs = await _context.Activities.Select(x => ActivityToDTO(x)).ToListAsync();
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
+
+            var activitiesDTOs = await _context.Activities
+            .Include(x => x.UserActivities)
+            .ThenInclude(x => x.AppUser)
+            .Select(x => ActivityToDTO(x))
+            .ToListAsync();
+
             return activitiesDTOs;
         }
 
@@ -47,7 +58,9 @@ namespace Application
             };
 
             _context.Activities.Add(activity);
-            var user = await  _context.Users.SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
+
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
+
             var attendee = new UserActivity
             {
                 AppUser = user,
