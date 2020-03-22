@@ -1,6 +1,7 @@
 using System.Text;
 using Application;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using Infrastucture;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,7 +44,9 @@ namespace API
             services.AddScoped<IActivitiesApp, ActivitiesApp>();
             services.AddScoped<IAppUserApp, AppUserApp>();
             services.AddScoped<IJwtGenerator, JwtGenerator>();
-            services.AddControllers(opt =>{
+            services.AddAutoMapper(typeof(ActivitiesApp).Assembly);
+            services.AddControllers(opt =>
+            {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             });

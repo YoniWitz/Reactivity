@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
+using Domain.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -13,10 +15,12 @@ namespace Application
     {
         private readonly DataContext _context;
         private readonly IAppUserApp _appUserApp;
+        private readonly IMapper _mapper;
 
-        public ActivitiesApp(DataContext context, IAppUserApp appUserApp)
+        public ActivitiesApp(DataContext context, IAppUserApp appUserApp, IMapper mapper)
         {
             _appUserApp = appUserApp;
+            _mapper = mapper;
             _context = context;
         }
 
@@ -28,20 +32,20 @@ namespace Application
             .SingleOrDefaultAsync(x => x.Id == id);
 
             if (activity == null) return null;
-            return ActivityToDTO(activity);
+            return _mapper.Map<Activity, ActivityDTO>(activity);
         }
 
         public async Task<List<ActivityDTO>> GetActivities()
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
+            var user = await _context.Users.
+            SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
 
-            var activitiesDTOs = await _context.Activities
+            var activities = await _context.Activities
             .Include(x => x.UserActivities)
             .ThenInclude(x => x.AppUser)
-            .Select(x => ActivityToDTO(x))
             .ToListAsync();
 
-            return activitiesDTOs;
+            return _mapper.Map<List<Activity>, List<ActivityDTO>>(activities);
         }
 
         public async Task<ActivityDTO> PostActivity(ActivityDTO activityDTO)
@@ -73,7 +77,7 @@ namespace Application
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (success) return ActivityToDTO(activity);
+            if (success) return _mapper.Map<Activity, ActivityDTO>(activity);
             else return null;
         }
 
@@ -92,7 +96,7 @@ namespace Application
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (success) return ActivityToDTO(currentActivity);
+            if (success) return _mapper.Map<Activity, ActivityDTO>(currentActivity);
             { return new ActivityDTO { Message = "Error updating activity" }; }
         }
 
@@ -128,16 +132,5 @@ namespace Application
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        private static ActivityDTO ActivityToDTO(Activity activity) =>
-             new ActivityDTO
-             {
-                 Id = activity.Id,
-                 Category = activity.Category,
-                 City = activity.City,
-                 Date = activity.Date,
-                 Description = activity.Description,
-                 Title = activity.Title,
-                 Venue = activity.Venue
-             };
     }
 }
