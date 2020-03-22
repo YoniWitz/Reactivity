@@ -4,9 +4,10 @@ using Domain.DTOs;
 
 namespace Application.Interfaces
 {
-    public interface IAppUserApp  : IDisposable
+    public interface IAppUserApp : IDisposable
     {
-           Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto);
-           Task<AppUserDTO> Register(AppUserRegisterDTO appUserRegisterDTO);
+        Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto);
+        Task<AppUserDTO> Register(AppUserRegisterDTO appUserRegisterDTO);
+        string GetCurrentUsername();
     }
 }

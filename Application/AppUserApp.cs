@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Domain.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -17,8 +19,11 @@ namespace Application
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtGenerator _jwtGenerator;
         private readonly DataContext _context;
-        public AppUserApp(DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+       
+        public AppUserApp(IHttpContextAccessor httpContextAccessor, DataContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
         {
+            _httpContextAccessor = httpContextAccessor;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -80,6 +85,12 @@ namespace Application
             return null;
         }
 
+        public string GetCurrentUsername()
+        {
+            var username = _httpContextAccessor.HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            return username;
+        }
         private static AppUserDTO AppUserToDTO(AppUser appUser) =>
              new AppUserDTO
              {

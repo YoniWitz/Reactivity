@@ -12,8 +12,11 @@ namespace Application
     public class ActivitiesApp : IActivitiesApp
     {
         private readonly DataContext _context;
-        public ActivitiesApp(DataContext context)
+        private readonly IAppUserApp _appUserApp;
+        
+        public ActivitiesApp(DataContext context, IAppUserApp appUserApp)
         {
+            _appUserApp = appUserApp;
             _context = context;
         }
 
@@ -44,6 +47,17 @@ namespace Application
             };
 
             _context.Activities.Add(activity);
+            var user = await  _context.Users.SingleOrDefaultAsync(x => x.UserName == _appUserApp.GetCurrentUsername());
+            var attendee = new UserActivity
+            {
+                AppUser = user,
+                Activity = activity,
+                IsHost = true,
+                DateJoined = DateTime.Now
+            };
+
+            _context.UserActivities.Add(attendee);
+
             var success = await _context.SaveChangesAsync() > 0;
 
             if (success) return ActivityToDTO(activity);
