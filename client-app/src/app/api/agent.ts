@@ -23,7 +23,7 @@ axios.interceptors.response.use(undefined, (error) => {
         toast.error('Network error - make sure API is running!', { autoClose: false })
     }
     else {
-        const { status, config, data, statusText } = error.response;
+        const { status, config, data, statusText, headers } = error.response;
 
         //login errors
         if (status === 404 && !localStorageUser) {
@@ -48,11 +48,14 @@ axios.interceptors.response.use(undefined, (error) => {
         }
         //unauthorized errors
         else if (status === 401) {
-            history.push('/');
-            toast.error('Please Login First');
+            if (headers['www-authenticate'].includes('Bearer error="invalid_token", error_description="The token expired')){
+                window.localStorage.removeItem('user');
+                window.location.reload();
+                toast.error('Session expired, Please Login Again');
+            }
         }
+        throw error.response;
     }
-    throw error.response;
 })
 
 const responseBody = (response: AxiosResponse) => response.data;

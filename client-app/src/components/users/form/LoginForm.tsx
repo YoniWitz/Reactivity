@@ -6,12 +6,14 @@ import { history } from '../../../index'
 
 interface IProps {
     setUser: (user: IUser) => void; 
+    loggedIn : boolean;
+    setLoggedIn :(loggedIn: boolean) => void;
 }
-export const LoginForm: React.FC<IProps> = ({ setUser }) => {
+export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) => {
     let [loginUser, setLoginUser] = useState<ILoginUser>({ email: '', password: '' })
     let [loading, setLoading] = useState<boolean>(false);
     let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-    let [loggedIn, setLoggedin] = useState<boolean>(false);
+    
 
     useEffect(() => {
         if (loggedIn) history.push('/');
@@ -32,7 +34,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser }) => {
             .then((response: IUser) => {
                 setUser(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
-                setLoggedin(true);
+                setLoggedIn(true);
             })
             .catch(err => console.log(err))
             .finally(() => setLoading(false));

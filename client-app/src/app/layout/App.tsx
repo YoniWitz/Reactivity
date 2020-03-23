@@ -18,6 +18,7 @@ const App = () => {
   let [activities, setActivities] = useState<IActivity[]>([]);
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   let [loading, setLoading] = useState<boolean>(true);
+  let [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   //called immediately after the component is mounted
   useEffect(() => {
@@ -34,13 +35,13 @@ const App = () => {
           returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
           setActivities(returnedActivityList);
         })
-        //.catch(err => console.log(err, "error fetching activities data"))
+        .catch(err => console.log(err, "error fetching activities data"))
         .finally(() => setLoading(false));
     }
     else {
       setLoading(false);
     }
-  }, []);
+  }, [loggedIn]);
 
   const handleCreateSubmit = (newActivity: IActivity) => {
     return new Promise(function (resolve, reject) {
@@ -87,7 +88,7 @@ const App = () => {
               <Redirect to={'/'} />}
           />
           <Route path='/login'  
-            render={(props) => <LoginForm  {...props} setUser={setUser} />} />
+            render={(props) => <LoginForm  {...props} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/register'
             render={(props) => <RegisterForm  {...props} setUser={setUser} />} />
           <Route component={NotFound} />
