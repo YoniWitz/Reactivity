@@ -35,7 +35,7 @@ const App = () => {
           returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
           setActivities(returnedActivityList);
         })
-        .catch(err => console.log(err, "error fetching activities data"))
+        //.catch(err => console.log(err, "error fetching activities data"))
         .finally(() => setLoading(false));
     }
     else {

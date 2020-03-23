@@ -53,9 +53,9 @@ axios.interceptors.response.use(undefined, (error) => {
                 window.location.reload();
                 toast.error('Session expired, Please Login Again');
             }
-        }
-        throw error.response;
+        }      
     }
+    throw error.response;
 })
 
 const responseBody = (response: AxiosResponse) => response.data;
