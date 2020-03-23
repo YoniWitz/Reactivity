@@ -5,37 +5,41 @@ import { Navbar } from "../../components/Navbar";
 import { ActivityDashboard } from "../../components/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
 import { Loading } from "./Loading";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { HomePage } from "../../components/home/HomePage";
-import { LoginForm } from "../../components/users/form/LoginForm"; 
+import { LoginForm } from "../../components/users/form/LoginForm";
 import { RegisterForm } from "../../components/users/form/RegisterForm";
 import { IUser } from "../models/IUser";
 import NotFound from "./NotFound";
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   let [user, setUser] = useState<IUser | null>(null);
   let [activities, setActivities] = useState<IActivity[]>([]);
   let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   let [loading, setLoading] = useState<boolean>(true);
- 
+
   //called immediately after the component is mounted
   useEffect(() => {
-    let tempUser:IUser = JSON.parse(window.localStorage.getItem('user')!);
-    if(tempUser)
-    setUser({
-      displayName : tempUser.displayName,
-      token : tempUser.token,
-      userName: tempUser.userName
-    })
-
-    agent.Activities.list()
-      .then(returnedActivityList => {
-        returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
-        setActivities(returnedActivityList);
+    let tempUser: IUser = JSON.parse(window.localStorage.getItem('user')!);
+    if (tempUser) {
+      setUser({
+        displayName: tempUser.displayName,
+        token: tempUser.token,
+        userName: tempUser.userName
       })
-      //.catch(err => console.log(err, "error fetching activities data"))
-      .finally(() => setLoading(false));
+
+      agent.Activities.list()
+        .then(returnedActivityList => {
+          returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
+          setActivities(returnedActivityList);
+        })
+        //.catch(err => console.log(err, "error fetching activities data"))
+        .finally(() => setLoading(false));
+    }
+    else {
+      setLoading(false);
+    }
   }, []);
 
   const handleCreateSubmit = (newActivity: IActivity) => {
@@ -73,15 +77,20 @@ const App = () => {
       <Container style={{ marginTop: '7em' }}>
         <Switch>
           <Route exact path='/'
-          render={(props) => <HomePage {...props} user={user}/>}/>
+            render={(props) => <HomePage {...props} user={user} />} />
           <Route path='/activities'
-            render={(props) => <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} handleEditSubmit={handleEditSubmit} activities={activities} />}
+            render={(props) => user? 
+              <ActivityDashboard {...props} handleDeleteActivity={handleDeleteActivity} 
+              setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} 
+              handleEditSubmit={handleEditSubmit} activities={activities} />
+            : 
+              <Redirect to={'/'} />}
           />
-          <Route path='/login' 
-          render={(props) => <LoginForm  {...props} setUser={setUser}/>}/>
-          <Route path='/register' 
-          render={(props) => <RegisterForm  {...props} setUser={setUser}/>}/>
-          <Route component={NotFound}/>
+          <Route path='/login'  
+            render={(props) => <LoginForm  {...props} setUser={setUser} />} />
+          <Route path='/register'
+            render={(props) => <RegisterForm  {...props} setUser={setUser} />} />
+          <Route component={NotFound} />
         </Switch>
       </Container>
     </Fragment>
