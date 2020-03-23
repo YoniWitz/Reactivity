@@ -5,7 +5,7 @@ import agent from '../../../app/api/agent'
 import { history } from '../../../index'
 
 interface IProps {
-    setUser: (user: IUser) => void;
+    setUser: (user: IUser) => void; 
 }
 export const LoginForm: React.FC<IProps> = ({ setUser }) => {
     let [loginUser, setLoginUser] = useState<ILoginUser>({ email: '', password: '' })
