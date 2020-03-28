@@ -8,7 +8,7 @@ import { ActivityForm } from "../form/ActivityForm";
 interface IProps {
   activities: IActivity[];
   handleEditSubmit: (activity: IActivity) => Promise<unknown>;
-  selectedActivity: IActivity | null;
+  selectedActivity: IActivity;
   setSelectedActivity: (activity: IActivity) => void;
   handleDeleteActivity: (id: string) => Promise<unknown>;
 }

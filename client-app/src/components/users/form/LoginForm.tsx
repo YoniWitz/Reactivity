@@ -1,30 +1,59 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Button, Message } from 'semantic-ui-react'
-import { ILoginUser, IUser } from '../../../app/models/IUser'
+import React, { useState, useEffect, useRef } from 'react'
+import { Form, Button } from 'semantic-ui-react'
+import { ILoginUser, IUser, ILoginUserFieldsMessages, ILoginUserFieldsValidations } from '../../../app/models/IUser'
 import agent from '../../../app/api/agent'
 import { history } from '../../../index'
 
 interface IProps {
-    setUser: (user: IUser) => void; 
-    loggedIn : boolean;
-    setLoggedIn :(loggedIn: boolean) => void;
+    setUser: (user: IUser) => void;
+    setLoggedIn: (loggedIn: boolean) => void;
 }
-export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) => {
+export const LoginForm: React.FC<IProps> = ({ setUser, setLoggedIn }) => {
     let [loginUser, setLoginUser] = useState<ILoginUser>({ email: '', password: '' })
     let [loading, setLoading] = useState<boolean>(false);
     let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-    
+    let [fieldsMessages, setFieldsMessages] = useState<ILoginUserFieldsMessages>({
+        email: null,
+        password: null
+    });
+
+    let fieldsValidations: ILoginUserFieldsValidations = {
+        email: loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? true : false,
+        password: loginUser.password.length >= 6
+    }
+
+    const isInitialEmail = useRef(true);
+    const isInitialPassword = useRef(true);
 
     useEffect(() => {
-        if (loggedIn) history.push('/');
+        setSubmitDisabled(!(Object.values(fieldsValidations).reduce((prevVal, validation) => prevVal && validation, true)));
+    }, [loginUser]);
 
-        let isEmailInvalid = loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? false : true;
-        setSubmitDisabled(loginUser.password.length < 6 || isEmailInvalid);
-    }, [loginUser, loggedIn]);
+    useEffect(() => {
+        if (isInitialEmail.current) {
+            isInitialEmail.current = false;
+        } else {
+            setFieldsMessages({
+                ...fieldsMessages, email: fieldsValidations.email ?
+                    null : "Must enter valid email address"
+            });
+        }
+    }, [loginUser.email]);
+
+    useEffect(() => {
+        if (isInitialPassword.current) {
+            isInitialPassword.current = false;
+        } else {
+            setFieldsMessages({
+                ...fieldsMessages, password: fieldsValidations.password ?
+                    null : "Password must contain  6 characters at least"
+            });
+        }
+    }, [loginUser.password]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let { name, value } = e.target;
-        setLoginUser({ ...loginUser, [name]: value })
+        setLoginUser({ ...loginUser, [name]: value });
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,6 +65,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 window.localStorage.setItem('user', JSON.stringify(response));
                 setLoggedIn(true);
             })
+            .then(() => history.push('/'))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
@@ -45,13 +75,32 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
             email: '',
             password: ''
         })
+        setFieldsMessages({
+            email: '',
+            password: ''
+        })
     }
     return (
         <Form onSubmit={handleSubmit} loading={loading} error>
-            <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={loginUser.email} name="email" />
-            {loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? null : <Message error>Must enter valid email address </Message>}
-            <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={loginUser.password} />
-            {(loginUser.password.length < 6) ? <Message error>Password must contain  6 characters at least</Message> : null}
+            <Form.Input
+                type="email"
+                name="email"
+                label='Email'
+                placeholder="Email"
+                value={loginUser.email}
+                onChange={(e) => handleChange(e)}
+                error={fieldsMessages.email}
+            />
+
+            <Form.Input
+                placeholder="Password"
+                label='Password'
+                type="password"
+                name="password"
+                value={loginUser.password}
+                onChange={(e) => handleChange(e)}
+                error={fieldsMessages.password}
+            />
             <Button.Group widths="2">
                 <Button floated='right' positive type="submit" content="Login" disabled={submitDisabled} />
                 <Button floated='left' type="button" content="Clear Form" onClick={clearForm} />

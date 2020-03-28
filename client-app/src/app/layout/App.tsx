@@ -14,9 +14,18 @@ import NotFound from "./NotFound";
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
+  let emptyActivity: IActivity = {
+    category:'',
+    city:'',
+    date:'',
+    description:'',
+    id:'',
+    title:'',
+    venue:''
+  }
   let [user, setUser] = useState<IUser | null>(null);
   let [activities, setActivities] = useState<IActivity[]>([]);
-  let [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+  let [selectedActivity, setSelectedActivity] = useState<IActivity>(emptyActivity);
   let [loading, setLoading] = useState<boolean>(true);
   let [loggedIn, setLoggedIn] = useState<boolean>(false);
 
@@ -88,7 +97,7 @@ const App = () => {
               <Redirect to={'/'} />}
           />
           <Route path='/login'  
-            render={(props) => <LoginForm  {...props} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+            render={(props) => <LoginForm  {...props} setUser={setUser} setLoggedIn={setLoggedIn} />} />
           <Route path='/register'
             render={(props) => <RegisterForm  {...props} setUser={setUser} />} />
           <Route component={NotFound} />

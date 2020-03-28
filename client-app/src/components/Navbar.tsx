@@ -20,8 +20,16 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
     setUser(null);
     history.push('/');
   }
-  
-  return (
+  let emptyActivity: IActivity = {
+    category:'',
+    city:'',
+    date:'',
+    description:'',
+    id:'',
+    title:'',
+    venue:''
+  }
+  return ( 
     <Menu fixed='top' inverted>
       <Container>
         <Menu.Item header as={NavLink} to='/' exact>
@@ -37,7 +45,7 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           <Menu.Item name="Activities" as={NavLink} to='/activities' />
           <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>} open={modalOpen}>
             <Modal.Header>Create New Activity</Modal.Header>
-            <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
+            <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={emptyActivity} />
           </Modal>
           </Fragment>
         }
