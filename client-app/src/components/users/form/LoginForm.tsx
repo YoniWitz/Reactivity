@@ -1,61 +1,81 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Button, Message } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Form, Button } from 'semantic-ui-react'
+import { useFormik } from 'formik';
 import { ILoginUser, IUser } from '../../../app/models/IUser'
-import agent from '../../../app/api/agent'
-import { history } from '../../../index'
+import agent from '../../../app/api/agent';
+import { history } from '../../../index';
 
 interface IProps {
-    setUser: (user: IUser) => void; 
-    loggedIn : boolean;
-    setLoggedIn :(loggedIn: boolean) => void;
+    setUser: (user: IUser) => void;
+    loggedIn: boolean;
+    setLoggedIn: (loggedIn: boolean) => void;
 }
+
 export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) => {
-    let [loginUser, setLoginUser] = useState<ILoginUser>({ email: '', password: '' })
     let [loading, setLoading] = useState<boolean>(false);
-    let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-    
 
-    useEffect(() => {
-        if (loggedIn) history.push('/');
+    let initialValues: ILoginUser = { email: '', password: '' };
 
-        let isEmailInvalid = loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? false : true;
-        setSubmitDisabled(loginUser.password.length < 6 || isEmailInvalid);
-    }, [loginUser, loggedIn]);
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     agent.Users.login(loginUser)
+    //         .then((response: IUser) => {
+    //             setUser(response);
+    //             window.localStorage.setItem('user', JSON.stringify(response));
+    //             setLoggedIn(true);
+    //         })
+    //         .catch(err => console.log(err))
+    //         .finally(() => setLoading(false));
+    // }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let { name, value } = e.target;
-        setLoginUser({ ...loginUser, [name]: value })
-    }
+    // const clearForm = () => {
+    //     setLoginUser({
+    //         email: '',
+    //         password: ''
+    //     })
+    // }
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values, actions) => {
+            console.log(values);
+            actions.resetForm();
+        }
+    });
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setLoading(true);
-        agent.Users.login(loginUser)
-            .then((response: IUser) => {
-                setUser(response);
-                window.localStorage.setItem('user', JSON.stringify(response));
-                setLoggedIn(true);
-            })
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false));
-    }
-
-    const clearForm = () => {
-        setLoginUser({
-            email: '',
-            password: ''
-        })
-    }
     return (
-        <Form onSubmit={handleSubmit} loading={loading} error>
-            <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={loginUser.email} name="email" />
-            {loginUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? null : <Message error>Must enter valid email address </Message>}
-            <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={loginUser.password} />
-            {(loginUser.password.length < 6) ? <Message error>Password must contain  6 characters at least</Message> : null}
+        <Form loading={loading} onSubmit={formik.handleSubmit}>
+            <Form.Input
+                placeholder="Email"
+                name="email"
+                type="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+            />
+
+            <Form.Input
+                placeholder="Password"
+                name="password"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password} />
+
             <Button.Group widths="2">
-                <Button floated='right' positive type="submit" content="Login" disabled={submitDisabled} />
-                <Button floated='left' type="button" content="Clear Form" onClick={clearForm} />
+                <Button
+                    content="Login"
+                    floated='right'
+                    positive
+                    type="submit"
+                />
+                <Button
+                    floated='left'
+                    type="reset"
+                    content="Clear Form"
+                    onClick={() => formik.resetForm()} />
             </Button.Group>
         </Form>
-    )
+    );
+
 }
