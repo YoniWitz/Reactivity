@@ -51,7 +51,8 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
     return (
         <Form loading={loading} onSubmit={formik.handleSubmit} error>
             <Form.Input
-                placeholder="Email"
+                placeholder="Enter Email"
+                label="Email"
                 name="email"
                 type="email"
                 onChange={formik.handleChange}
@@ -60,12 +61,14 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
             />
             {(formik.touched.email && formik.errors.email) && <Message error >{formik.errors.email}</Message>}
             <Form.Input
-                placeholder="Password"
+                placeholder="Enter Password"
+                label="Password"
                 name="password"
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.password} />
+                value={formik.values.password}
+            />
             {(formik.touched.password && formik.errors.password) && <Message style={{ display: 'block' }} error >{formik.errors.password}</Message>}
             <Button.Group widths="2">
                 <Button
@@ -78,7 +81,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                     floated='left'
                     type="reset"
                     content="Clear Form"
-                    onClick={() => formik.resetForm()} 
+                    onClick={() => formik.resetForm()}
                 />
             </Button.Group>
         </Form>

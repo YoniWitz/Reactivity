@@ -23,7 +23,7 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
     let initialValues: IRegisterUser = { displayName: '', userName: '', email: '', password: '' };
 
     useEffect(() => {
-        if (loggedIn) history.push('/activities');
+        if (loggedIn) history.push('/');
     }, [loggedIn]);
 
     const handleSubmit = (registerUser: IRegisterUser) => {
@@ -42,8 +42,8 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
         initialValues: initialValues,
         onSubmit: (values, actions) => {
             values.userName = values.displayName.replace(/\s/g, '');
-            actions.resetForm();
             handleSubmit(values);
+            actions.resetForm();
         },
         validationSchema: reviewSchema
     });
@@ -55,14 +55,15 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
             error
         >
             <Form.Input
-                placeholder="Full Name"
-                name="displayName"
+                placeholder="Enter Full Name"
+                label='Full Name'
+                name="displayName"            
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.displayName}
             />
-            {(formik.touched.displayName && formik.errors.displayName) && <Message style={{ display: 'block' }} error >{formik.errors.displayName}</Message>}
+            {(formik.touched.displayName && formik.errors.displayName) && <Message style={{ display: 'block' }} error >Full Name is Required</Message>}
             {/* <Form.Input
                 placeholder="User Name"
                 name="userName"
@@ -71,8 +72,9 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.userName} />
             {(formik.touched.displayName && formik.errors.displayName) && <Message style={{ display: 'block' }} error >{formik.errors.displayName}</Message>} */}
-            <Form.Input
-                placeholder="Email"
+            <Form.Input          
+                placeholder="Enter Email"
+                label='Email'
                 name="email"
                 type="email"
                 onChange={formik.handleChange}
@@ -81,24 +83,28 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
             />
             {(formik.touched.email && formik.errors.email) && <Message style={{ display: 'block' }} error >{formik.errors.email}</Message>}
             <Form.Input
-                placeholder="Password"
+                placeholder="Enter Password"
+                label="Password"
                 name="password"
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.password} />
+                value={formik.values.password} 
+            />
             {(formik.touched.password && formik.errors.password) && <Message style={{ display: 'block' }} error >{formik.errors.password}</Message>}
             <Button.Group widths="2">
                 <Button
                     floated='right'
-                    positive type="submit"
+                    positive 
+                    type="submit"
                     content="Register"
                 />
                 <Button
                     floated='left'
                     type="button"
                     content="Clear Form"
-                    onClick={() => formik.resetForm()} />
+                    onClick={() => formik.resetForm()} 
+                />
             </Button.Group>
         </Form>
     )
