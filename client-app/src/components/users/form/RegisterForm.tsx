@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Button, Message } from 'semantic-ui-react'
-import { IRegisterUser, IUser } from '../../../app/models/IUser'
-import agent from '../../../app/api/agent'
-import { history } from '../../../index'
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Message } from 'semantic-ui-react';
+import { IRegisterUser, IUser } from '../../../app/models/IUser';
+import agent from '../../../app/api/agent';
+import { history } from '../../../index';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
 interface IProps {
     setUser: (user: IUser) => void;
 }
+
+const reviewSchema = yup.object({
+    displayName: yup.string().required().min(1),
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+})
+
 export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
-    let [registerUser, setRegisterUser] = useState<IRegisterUser>({ email: '', password: '', displayName:'', userName:'' })
     let [loading, setLoading] = useState<boolean>(false);
-    let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     let [loggedIn, setLoggedin] = useState<boolean>(false);
 
+    let initialValues: IRegisterUser = { displayName: '', userName: '', email: '', password: '' };
+
     useEffect(() => {
-        if (loggedIn) history.push('/');
+        if (loggedIn) history.push('/activities');
+    }, [loggedIn]);
 
-        let isEmailInvalid = registerUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? false : true;
-        setSubmitDisabled(registerUser.userName.length < 1 || registerUser.displayName.length < 1 || registerUser.password.length < 6 || isEmailInvalid);
-    }, [registerUser, loggedIn]);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let { name, value } = e.target;
-        setRegisterUser({ ...registerUser, [name]: value })
-    }
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = (registerUser: IRegisterUser) => {
         setLoading(true);
         agent.Users.register(registerUser)
             .then((response: IUser) => {
@@ -38,28 +38,67 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
             .finally(() => setLoading(false));
     }
 
-    const clearForm = () => {
-        setRegisterUser({
-            email: '',
-            password: '',
-            displayName: '',
-            userName:''
-        })
-    }
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values, actions) => {
+            values.userName = values.displayName.replace(/\s/g, '');
+            actions.resetForm();
+            handleSubmit(values);
+        },
+        validationSchema: reviewSchema
+    });
+
     return (
-        <Form onSubmit={handleSubmit} loading={loading} error>
-            <Form.Input type="text" onChange={(e) => handleChange(e)} placeholder="Display Name" name="displayName" value={registerUser.displayName} />
-            {(registerUser.displayName.length < 1) ? <Message error>Display Name must contain 1 character at least</Message> : null}
-            <Form.Input type="text" onChange={(e) => handleChange(e)} placeholder="User Name" name="userName" value={registerUser.userName} />
-            {(registerUser.userName.length < 1) ? <Message error>User Name must contain 1 character at least</Message> : null}
-            <Form.Input type="email" onChange={(e) => handleChange(e)} placeholder="Email" value={registerUser.email} name="email" />
-            {registerUser.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? null : <Message error>Must enter valid email address </Message>}
-            <Form.Input type="password" onChange={(e) => handleChange(e)} placeholder="Password" name="password" value={registerUser.password} />
-            {(registerUser.password.length < 6) ? <Message error>Password must contain  6 characters at least</Message> : null}
-            
+        <Form
+            onSubmit={formik.handleSubmit}
+            loading={loading}
+            error
+        >
+            <Form.Input
+                placeholder="Full Name"
+                name="displayName"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.displayName}
+            />
+            {(formik.touched.displayName && formik.errors.displayName) && <Message style={{ display: 'block' }} error >{formik.errors.displayName}</Message>}
+            {/* <Form.Input
+                placeholder="User Name"
+                name="userName"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.userName} />
+            {(formik.touched.displayName && formik.errors.displayName) && <Message style={{ display: 'block' }} error >{formik.errors.displayName}</Message>} */}
+            <Form.Input
+                placeholder="Email"
+                name="email"
+                type="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+            />
+            {(formik.touched.email && formik.errors.email) && <Message style={{ display: 'block' }} error >{formik.errors.email}</Message>}
+            <Form.Input
+                placeholder="Password"
+                name="password"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password} />
+            {(formik.touched.password && formik.errors.password) && <Message style={{ display: 'block' }} error >{formik.errors.password}</Message>}
             <Button.Group widths="2">
-                <Button floated='right' positive type="submit" content="Register" disabled={submitDisabled} />
-                <Button floated='left' type="button" content="Clear Form" onClick={clearForm} />
+                <Button
+                    floated='right'
+                    positive type="submit"
+                    content="Register"
+                />
+                <Button
+                    floated='left'
+                    type="button"
+                    content="Clear Form"
+                    onClick={() => formik.resetForm()} />
             </Button.Group>
         </Form>
     )
