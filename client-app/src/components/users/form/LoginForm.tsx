@@ -34,6 +34,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 setUser(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
                 setLoggedIn(true);
+                formik.resetForm();
             })
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
@@ -42,7 +43,6 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values, actions) => {
-            actions.resetForm();
             handleSubmit(values);
         },
         validationSchema: reviewSchema

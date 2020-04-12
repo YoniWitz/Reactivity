@@ -55,6 +55,7 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         setSelectedActivity(activity);
         setCreated(true);
         toast.success(`Activity ${message}`);
+        formik.resetForm();
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -63,7 +64,6 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
   const formik = useFormik({
     initialValues: initActivity(),
     onSubmit: (values, actions) => {
-      actions.resetForm();
       handleFormSubmit(values);
     },
     validationSchema: reviewSchema
@@ -134,7 +134,7 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         {(formik.touched.venue && formik.errors.venue) && <Message style={{ display: 'block' }} error >{formik.errors.venue}</Message>}
         <Button.Group widths="2">
           <Button floated='right' positive type="submit" content="Submit" />
-          <Button floated='left' type="button" onClick={() => formik.resetForm()} content="Clear Form" />
+          <Button floated='left' type="button" onClick={() => formik.resetForm()} content="Clear Changes" />
         </Button.Group>
       </Form>
     </Segment>
