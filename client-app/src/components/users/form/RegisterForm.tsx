@@ -46,7 +46,6 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
             handleSubmit(values);
         },
         validationSchema: reviewSchema
-
     });
 
     return (
