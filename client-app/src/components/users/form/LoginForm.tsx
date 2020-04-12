@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Message } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import { ILoginUser, IUser } from '../../../app/models/IUser';
@@ -23,6 +23,10 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
 
     let initialValues: ILoginUser = { email: '', password: '' };
 
+    useEffect(() => {
+        if(loggedIn) history.push('/')
+        
+    }, [loggedIn])
     const handleSubmit = (loginUser: ILoginUser) => {
         setLoading(true);
         agent.Users.login(loginUser)
@@ -31,7 +35,6 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 window.localStorage.setItem('user', JSON.stringify(response));
                 setLoggedIn(true);
             })
-            .then(() => history.push('/'))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
