@@ -25,12 +25,8 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
     <Menu fixed='top' inverted>
       <Container>
         <Menu.Item header as={NavLink} to='/' exact>
-          <img
-            src="./assets/logo.png"
-            alt="logo"
-            style={{ marginRight: "10px" }}
-          />
-          Reactivity
+          
+         <span style={{fontStyle:'oblique', fontSize:'large'}}> Reactivity</span>
         </Menu.Item>
         {user &&
           <Fragment>

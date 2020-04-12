@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Container, Segment, Header, Image, Button } from 'semantic-ui-react'
+import { Container, Segment, Header, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { IUser } from '../../app/models/IUser'
 
@@ -11,17 +11,7 @@ export const HomePage: React.FC<IProps> = ({ user }) => {
     return (
         <Segment inverted textAlign='center' vertical>
             <Container text style={{ marginTop: '7em' }}>
-                <Header as='h1' inverted>
-                    <Image
-                        size='massive'
-                        src="/assets/logo.png"
-                        alt='logo'
-                        style={{ marginBottom: 12 }}
-                    />
-                    Reactivities
-                </Header>
-
-                <Header as='h2' inverted content={user ? 'Welcome Back ' + user.displayName : 'Welcome to Reactivities'} />
+                <Header as='h2' inverted content={user ? 'Welcome Back ' + user.displayName : 'Welcome to Reactivity'} />
                 {
                     user ?
                         (<Button as={Link} to='/activities' size='huge' inverted>
