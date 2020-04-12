@@ -32,7 +32,12 @@ const App = () => {
 
       agent.Activities.list()
         .then(returnedActivityList => {
-          returnedActivityList.forEach(activity => activity.date = activity.date.split('.')[0]);
+          returnedActivityList.forEach(activity => {
+            let date : string[] = activity.date.split('T')[0].split('-');       
+            date.push(date.shift() || "");
+            activity.date = date.join('/');
+            
+        });
           setActivities(returnedActivityList);
         })
         //.catch(err => console.log(err, "error fetching activities data"))

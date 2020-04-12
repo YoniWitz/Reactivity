@@ -19,14 +19,14 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(undefined, (error) => {
     console.log(error)
-    if (error.message === 'Network Error' && !error.response) {
+    if (error.message === 'Network Error' && !error.headers) {
         toast.error('Network error - make sure API is running!', { autoClose: false })
     }
     else {
         const { status, config, data, statusText, headers } = error.response;
 
         //login errors
-        if (status === 404 && !localStorageUser) {
+        if ((status === 404 && !localStorageUser) || (error.message === 'Network Error' && !error.response)) {
             toast.error('Username and password not found');
         }
         else if (status === 400) {
