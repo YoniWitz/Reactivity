@@ -31,6 +31,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 window.localStorage.setItem('user', JSON.stringify(response));
                 setLoggedIn(true);
             })
+            .then(() => history.push('/'))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
@@ -39,7 +40,6 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
         initialValues: initialValues,
         onSubmit: (values, actions) => {           
             actions.resetForm();
-            console.log(values);
             handleSubmit(values);
         },
         validationSchema: reviewSchema
@@ -55,7 +55,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
             />
-            {(formik.touched.email && formik.errors.email) ? <Message error >{formik.errors.email}</Message> : null}
+            {(formik.touched.email && formik.errors.email) && <Message error >{formik.errors.email}</Message>}
             <Form.Input
                 placeholder="Password"
                 name="password"
@@ -63,7 +63,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password} />
-            {(formik.touched.password && formik.errors.password) ? <Message style={{ display: 'block' }} error >{formik.errors.password}</Message> : null}
+            {(formik.touched.password && formik.errors.password) && <Message style={{ display: 'block' }} error >{formik.errors.password}</Message>}
             <Button.Group widths="2">
                 <Button
                     content="Login"
