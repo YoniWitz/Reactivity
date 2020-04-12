@@ -3,6 +3,8 @@ import { Segment, Form, Button, Message } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IAcitivity";
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
 interface IProps {
   onCancelForm: (isAlive: boolean) => void;
@@ -10,6 +12,16 @@ interface IProps {
   handleSubmit: (activity: IActivity) => Promise<unknown>;
   setSelectedActivity: (activity: IActivity) => void;
 }
+
+const reviewSchema = yup.object({
+  title: yup.string().required().min(1),
+  category: yup.string().required().min(1),
+  description: yup.string().required().min(1),
+  date: yup.string().required().min(1),
+  city: yup.string().required().min(1),
+  venue: yup.string().required().min(1),
+})
+
 export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, handleSubmit, setSelectedActivity }) => {
 
   const initActivity = () => {
@@ -28,56 +40,95 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
       }
     }
   }
-
-  let [activity, setActivity] = useState<IActivity>(initActivity);
+  let [created, setCreated] = useState(false);
   let [loading, setLoading] = useState(false);
-  let [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-     setSubmitDisabled(
-       activity.title.length < 1 || activity.category.length < 1 
-      || activity.city.length < 1 || activity.description.length < 1 
-      || activity.venue.length < 1 || activity.date.length < 1);
-  }, [activity])
+    if(created) onCancelForm(false);
+  }, [created])
 
-
-  const handleInputChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    let { name, value } = event.currentTarget;
-    setActivity({ ...activity, [name]: value })
-  }
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = (values: IActivity) => {
     setLoading(true);
-    if (activity.id.length === 0) activity.id = uuid();
-    handleSubmit(activity)
+    if (values.id.length === 0) values.id = uuid();
+    handleSubmit(values)
       .then((message) => {
-        onCancelForm(false);
-        toast.success(`Activity ${message}`); 
-        setSelectedActivity(activity);
+        setSelectedActivity(values);
+        setCreated(true);
+        toast.success(`Activity ${message}`);       
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }
+ 
+  const formik = useFormik({
+    initialValues: initActivity(),
+    onSubmit: (values, actions) => {
+      actions.resetForm();
+      handleFormSubmit(values);
+    },
+    validationSchema: reviewSchema
+  });
 
   return (
     <Segment>
-      <Form onSubmit={handleFormSubmit} loading={loading} error>
-        <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
-        {(activity.title.length < 1) ? <Message error>Activity must include a title</Message> : null}
-        <Form.TextArea rows="2" placeholder="Description" value={activity.description} name="description" onChange={handleInputChange} />
-        {(activity.description.length < 1) ? <Message error>Activity must include a description</Message> : null}
-        <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />
-        {(activity.category.length < 1) ? <Message error>Activity must include a category</Message> : null}
-        <Form.Input type="datetime-local" placeholder="Date" value={activity.date} name="date" onChange={handleInputChange} />
-        {(activity.date.length < 1) ? <Message error>Activity must include a date</Message> : null}
-        <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
-        {(activity.city.length < 1) ? <Message error>Activity must include a city</Message> : null}
-        <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
-        {(activity.venue.length < 1) ? <Message error>Activity must include a venue</Message> : null}
+      <Form onSubmit={formik.handleSubmit} loading={loading} error>
+        <Form.Input
+          placeholder="Title"
+          name="title"
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.title}
+        />
+        {(formik.touched.title && formik.errors.title) && <Message style={{ display: 'block' }} error >{formik.errors.title}</Message>}
+        <Form.TextArea rows="2"
+          placeholder="Description"
+          name="description"
+          type="TextArea"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.description}
+        />
+        {(formik.touched.description && formik.errors.description) && <Message style={{ display: 'block' }} error >{formik.errors.description}</Message>}
+        <Form.Input
+          placeholder="Category"
+          name="category"
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.category}
+        />
+        {(formik.touched.category && formik.errors.category) && <Message style={{ display: 'block' }} error >{formik.errors.category}</Message>}
+        <Form.Input
+          placeholder="Date"
+          name="date"
+          type="datetime-local"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.date}
+        />
+        {(formik.touched.date && formik.errors.date) && <Message style={{ display: 'block' }} error >{formik.errors.date}</Message>}
+        <Form.Input
+          placeholder="City"
+          name="city"
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.city}
+        />
+        {(formik.touched.city && formik.errors.city) && <Message style={{ display: 'block' }} error >{formik.errors.city}</Message>}
+        <Form.Input
+          placeholder="Venue"
+          name="venue"
+          type="Text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.venue}
+        />
+        {(formik.touched.venue && formik.errors.venue) && <Message style={{ display: 'block' }} error >{formik.errors.venue}</Message>}
         <Button.Group widths="2">
-          <Button floated='right' positive type="submit" content="Submit" disabled={submitDisabled}/>
-          <Button floated='left' type="button" onClick={() => onCancelForm(false)} content="Cancel" />
+          <Button floated='right' positive type="submit" content="Submit" />
+          <Button floated='left' type="button" onClick={() => formik.resetForm()} content="Clear Form" />
         </Button.Group>
       </Form>
     </Segment>

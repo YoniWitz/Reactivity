@@ -24,9 +24,9 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
     let initialValues: ILoginUser = { email: '', password: '' };
 
     useEffect(() => {
-        if(loggedIn) history.push('/')       
+        if (loggedIn) history.push('/')
     }, [loggedIn])
-    
+
     const handleSubmit = (loginUser: ILoginUser) => {
         setLoading(true);
         agent.Users.login(loginUser)
@@ -41,7 +41,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
 
     const formik = useFormik({
         initialValues: initialValues,
-        onSubmit: (values, actions) => {           
+        onSubmit: (values, actions) => {
             actions.resetForm();
             handleSubmit(values);
         },
@@ -78,7 +78,8 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                     floated='left'
                     type="reset"
                     content="Clear Form"
-                    onClick={() => formik.resetForm()} />
+                    onClick={() => formik.resetForm()} 
+                />
             </Button.Group>
         </Form>
     );
