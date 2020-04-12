@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Message } from 'semantic-ui-react';
 import { useFormik } from 'formik';
-import { ILoginUser, IUser } from '../../../app/models/IUser'
+import { ILoginUser, IUser } from '../../../app/models/IUser';
 import agent from '../../../app/api/agent';
 import { history } from '../../../index';
+import * as yup from 'yup';
 
 interface IProps {
     setUser: (user: IUser) => void;
@@ -11,40 +12,41 @@ interface IProps {
     setLoggedIn: (loggedIn: boolean) => void;
 }
 
+const reviewSchema = yup.object({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+})
+
+
 export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) => {
     let [loading, setLoading] = useState<boolean>(false);
 
     let initialValues: ILoginUser = { email: '', password: '' };
 
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     setLoading(true);
-    //     agent.Users.login(loginUser)
-    //         .then((response: IUser) => {
-    //             setUser(response);
-    //             window.localStorage.setItem('user', JSON.stringify(response));
-    //             setLoggedIn(true);
-    //         })
-    //         .catch(err => console.log(err))
-    //         .finally(() => setLoading(false));
-    // }
+    const handleSubmit = (loginUser: ILoginUser) => {
+        setLoading(true);
+        agent.Users.login(loginUser)
+            .then((response: IUser) => {
+                setUser(response);
+                window.localStorage.setItem('user', JSON.stringify(response));
+                setLoggedIn(true);
+            })
+            .catch(err => console.log(err))
+            .finally(() => setLoading(false));
+    }
 
-    // const clearForm = () => {
-    //     setLoginUser({
-    //         email: '',
-    //         password: ''
-    //     })
-    // }
     const formik = useFormik({
         initialValues: initialValues,
-        onSubmit: (values, actions) => {
-            console.log(values);
+        onSubmit: (values, actions) => {           
             actions.resetForm();
-        }
+            console.log(values);
+            handleSubmit(values);
+        },
+        validationSchema: reviewSchema
     });
 
     return (
-        <Form loading={loading} onSubmit={formik.handleSubmit}>
+        <Form loading={loading} onSubmit={formik.handleSubmit} error>
             <Form.Input
                 placeholder="Email"
                 name="email"
@@ -53,7 +55,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
             />
-
+            {(formik.touched.email && formik.errors.email) ? <Message error >{formik.errors.email}</Message> : null}
             <Form.Input
                 placeholder="Password"
                 name="password"
@@ -61,7 +63,7 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password} />
-
+            {(formik.touched.password && formik.errors.password) ? <Message style={{ display: 'block' }} error >{formik.errors.password}</Message> : null}
             <Button.Group widths="2">
                 <Button
                     content="Login"
