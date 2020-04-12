@@ -11,7 +11,7 @@ export const HomePage: React.FC<IProps> = ({ user }) => {
     return (
         <Segment inverted textAlign='center' vertical>
             <Container text style={{ marginTop: '7em' }}>
-                <Header as='h2' inverted content={user ? 'Welcome Back ' + user.displayName : 'Welcome to Reactivities'} />
+                <Header as='h2' inverted content={user ? 'Welcome Back ' + user.displayName : 'Welcome to Reactivity'} />
                 {
                     user ?
                         (<Button as={Link} to='/activities' size='huge' inverted>
