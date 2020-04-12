@@ -33,6 +33,7 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
                 setUser(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
                 setLoggedin(true);
+                formik.resetForm();
             })
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
@@ -43,7 +44,6 @@ export const RegisterForm: React.FC<IProps> = ({ setUser }) => {
         onSubmit: (values, actions) => {
             values.userName = values.displayName.replace(/\s/g, '');
             handleSubmit(values);
-            actions.resetForm();
         },
         validationSchema: reviewSchema
     });
