@@ -44,22 +44,22 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
   let [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(created) onCancelForm(false);
+    if (created) onCancelForm(false);
   }, [created])
 
-  const handleFormSubmit = (values: IActivity) => {
+  const handleFormSubmit = (activity: IActivity) => {
     setLoading(true);
-    if (values.id.length === 0) values.id = uuid();
-    handleSubmit(values)
+    if (activity.id.length === 0) activity.id = uuid();
+    handleSubmit(activity)
       .then((message) => {
-        setSelectedActivity(values);
+        setSelectedActivity(activity);
         setCreated(true);
-        toast.success(`Activity ${message}`);       
+        toast.success(`Activity ${message}`);
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }
- 
+
   const formik = useFormik({
     initialValues: initActivity(),
     onSubmit: (values, actions) => {
@@ -73,7 +73,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
     <Segment>
       <Form onSubmit={formik.handleSubmit} loading={loading} error>
         <Form.Input
-          placeholder="Title"
+          placeholder="Enter Title"
+          label="Title"
           name="title"
           type="text"
           onChange={formik.handleChange}
@@ -82,7 +83,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         />
         {(formik.touched.title && formik.errors.title) && <Message style={{ display: 'block' }} error >{formik.errors.title}</Message>}
         <Form.TextArea rows="2"
-          placeholder="Description"
+          placeholder="Enter Description"
+          label="Description"
           name="description"
           type="TextArea"
           onChange={formik.handleChange}
@@ -91,7 +93,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         />
         {(formik.touched.description && formik.errors.description) && <Message style={{ display: 'block' }} error >{formik.errors.description}</Message>}
         <Form.Input
-          placeholder="Category"
+          placeholder="Enter Category"
+          label="Category"
           name="category"
           type="text"
           onChange={formik.handleChange}
@@ -100,7 +103,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         />
         {(formik.touched.category && formik.errors.category) && <Message style={{ display: 'block' }} error >{formik.errors.category}</Message>}
         <Form.Input
-          placeholder="Date"
+          placeholder="Enter Date"
+          label="Date"
           name="date"
           type="datetime-local"
           onChange={formik.handleChange}
@@ -109,7 +113,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         />
         {(formik.touched.date && formik.errors.date) && <Message style={{ display: 'block' }} error >{formik.errors.date}</Message>}
         <Form.Input
-          placeholder="City"
+          placeholder="Enter City"
+          label="City"
           name="city"
           type="text"
           onChange={formik.handleChange}
@@ -118,7 +123,8 @@ export const ActivityForm: React.FC<IProps> = ({ onCancelForm, presentActivity, 
         />
         {(formik.touched.city && formik.errors.city) && <Message style={{ display: 'block' }} error >{formik.errors.city}</Message>}
         <Form.Input
-          placeholder="Venue"
+          placeholder="Enter Venue"
+          label="Venue"
           name="venue"
           type="Text"
           onChange={formik.handleChange}

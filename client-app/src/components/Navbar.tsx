@@ -20,7 +20,7 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
     setUser(null);
     history.push('/');
   }
-  
+
   return (
     <Menu fixed='top' inverted>
       <Container>
@@ -32,18 +32,33 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           />
           Reactivity
         </Menu.Item>
-        {user && 
+        {user &&
           <Fragment>
-          <Menu.Item name="Activities" as={NavLink} to='/activities' />
-          <Modal trigger={<Button color="green" size='medium' onClick={() => setModalOpen(true)}>Create Activity</Button>} open={modalOpen}>
-            <Modal.Header>Create New Activity</Modal.Header>
-            <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
-          </Modal>
+            <Menu.Item name="Activities" as={NavLink} to='/activities' />
+            <Modal
+              closeOnEscape={modalOpen}
+              closeOnDimmerClick={modalOpen}
+              onClose={() => setModalOpen(false)}
+              open={modalOpen}
+              trigger={
+                <Button
+                  color="green"
+                  size='medium'
+                  onClick={() => setModalOpen(true)}
+                >
+                  Create Activity
+              </Button>
+              }
+              closeIcon
+            >
+              <Modal.Header>Create New Activity</Modal.Header>
+              <ActivityForm setSelectedActivity={setSelectedActivity} handleSubmit={handleCreateSubmit} onCancelForm={setModalOpen} presentActivity={null} />
+            </Modal>
           </Fragment>
         }
         <Menu.Item position='right'>
           <Image avatar spaced='right' src={user ? user.image || '/assets/user.png' : '/assets/user.png'} />Hello {user ? user.displayName : 'Guest'}</Menu.Item>
-        {user ? <Menu.Item as={Button} onClick={logout}>Logout</Menu.Item> : <Menu.Item header as={NavLink} to='/register' exact>Register</Menu.Item>}
+        {user ? <Menu.Item as={Button} onClick={logout}>Logout</Menu.Item> : <><Menu.Item header as={NavLink} to='/register' exact>Register</Menu.Item><Menu.Item header as={NavLink} to='/login' exact>Login</Menu.Item></>}
       </Container>
     </Menu >
   );
