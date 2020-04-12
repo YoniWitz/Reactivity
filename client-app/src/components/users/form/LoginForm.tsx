@@ -24,9 +24,9 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
     let initialValues: ILoginUser = { email: '', password: '' };
 
     useEffect(() => {
-        if(loggedIn) history.push('/')
-        
+        if(loggedIn) history.push('/')       
     }, [loggedIn])
+    
     const handleSubmit = (loginUser: ILoginUser) => {
         setLoading(true);
         agent.Users.login(loginUser)
