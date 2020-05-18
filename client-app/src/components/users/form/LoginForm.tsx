@@ -33,11 +33,14 @@ export const LoginForm: React.FC<IProps> = ({ setUser, loggedIn, setLoggedIn }) 
             .then((response: IUser) => {
                 setUser(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
-                setLoggedIn(true);
+                setLoading(false);
                 formik.resetForm();
+                setLoggedIn(true);
             })
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false));
+            .catch(err => {
+                console.log(err);
+                setLoading(false);
+            })
     }
 
     const formik = useFormik({

@@ -38,10 +38,12 @@ namespace Application
             {
                 appUserDTO.Message.Add("Email already in system");
             }
-            // if (await _context.Users.Where(x => x.UserName == appUserRegisterDTO.UserName).AnyAsync())
-            // {
-            //     appUserDTO.Message.Add("User name already in system");
-            // }
+
+            if (await _context.Users.Where(x => x.UserName == appUserRegisterDTO.UserName).AnyAsync())
+            {
+                appUserDTO.Message.Add("User Name already in system");
+            }
+
             var newUser = new AppUser
             {
                 DisplayName = appUserRegisterDTO.UserName,
@@ -69,7 +71,8 @@ namespace Application
         public async Task<AppUserDTO> Login(AppUserLoginDTO appUserLoginDto)
         {
             var appUser = await _userManager.FindByEmailAsync(appUserLoginDto.Email);
-
+            
+            if(appUser == null) return null;
             var appUserResult = await _signInManager.CheckPasswordSignInAsync(appUser, appUserLoginDto.Password, false);
 
             if (appUserResult.Succeeded)

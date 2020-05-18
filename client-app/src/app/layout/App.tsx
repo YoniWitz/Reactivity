@@ -93,9 +93,11 @@ const App = () => {
               <Redirect to={'/'} />}
           />
           <Route path='/login'  
-            render={(props) => <LoginForm  {...props} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+            render={(props) => <LoginForm  {...props} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} 
+          />
           <Route path='/register'
-            render={(props) => <RegisterForm  {...props} setUser={setUser} />} />
+            render={(props) => <RegisterForm  {...props} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} 
+          />
           <Route component={NotFound} />
         </Switch>
       </Container>

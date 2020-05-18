@@ -18,7 +18,7 @@ My ultimate goal is to land a job that incorporates my skills and utilizes my ab
 
 1. Download Repository  
 2. Run command From API folder, 'dontnet watch run'  
-3. Run command From client-app folder, 'npm serve'  
+3. Run command From client-app folder, 'npm start'  
 4. In browser, redirect to http://localhost:5000/  
 
 ## Author

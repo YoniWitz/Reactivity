@@ -53,7 +53,7 @@ export const Navbar: React.FC<IProps> = ({ handleCreateSubmit, setSelectedActivi
           </Fragment>
         }
         <Menu.Item position='right'>
-          <Image avatar spaced='right' src={user ? user.image || '/assets/user.png' : '/assets/user.png'} />Hello {user ? user.displayName : 'Guest'}</Menu.Item>
+          <Image avatar spaced='right' src={user ? user.image || '/assets/user.png' : '/assets/user.png'} />Hello {user ? user.userName : 'Guest'}</Menu.Item>
         {user ? <Menu.Item as={Button} onClick={logout}>Logout</Menu.Item> : <><Menu.Item header as={NavLink} to='/register' exact>Register</Menu.Item><Menu.Item header as={NavLink} to='/login' exact>Login</Menu.Item></>}
       </Container>
     </Menu >
