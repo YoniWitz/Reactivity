@@ -1,8 +1,6 @@
 # Reactivity
 Allows user to view, create, edit and delete activities. Written in .NET Core, C#, EF code first, React, Type Script
 
-## You can use it [here](https://ywreactivity.azurewebsites.net/)
-
 <image src="client-app/public/assets/reactivity_screenshot.png">
 
 ## Summary
