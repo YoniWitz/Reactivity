@@ -24,7 +24,7 @@
     "react-toastify": "^5.5.0",
     "semantic-ui-react": "^0.88.2",
     "typescript": "^3.7.5",
-    "uuid": "^7.0.1",
+    "uuid": "^14.0.0",
     "yup": "^0.28.3"
   },
   "scripts": {
